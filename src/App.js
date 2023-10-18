@@ -1,31 +1,78 @@
-import React from 'react'
-import { DataQuery } from '@dhis2/app-runtime'
-import i18n from '@dhis2/d2-i18n'
-import classes from './App.module.css'
+import React from "react";
+import classes from "./App.module.css";
+import {useState} from "react";
+
+import {Browse} from "./Browse";
+// import {Insert} from "./Insert";
+// import {Datasets} from "./Datasets";
+
+import {Navigation} from "./Navigation";
+import {useDataQuery} from "@dhis2/app-runtime";
 
 const query = {
-    me: {
+    mikita: {
         resource: 'me',
+        params: {
+            fields: [
+                'id',
+                'name',
+                'organisationUnits'
+            ],
+        },
     },
+    dataSets: {
+        resource: 'dataSets/ULowA8V3ucd',
+        params: {
+            fields: ['dataSetElements[dataElement[id, displayName, categoryCombo[name,id,categoryOptionCombos[name,id]]]']
+        }
+    },
+    organisation: {
+     resource: 'organisationUnits/ImspTQPwCqd',
+        params: {
+         fields: [
+             'dataSets[id, name, displayName]',
+             'users[id, name, displayName]',
+             '*'
+         ]
+        }
+    }
+}
+const dataSetsQuery = {
+    dataSets: {
+        resource: 'dataSets'
+    }
 }
 
-const MyApp = () => (
-    <div className={classes.container}>
-        <DataQuery query={query}>
-            {({ error, loading, data }) => {
-                if (error) return <span>ERROR</span>
-                if (loading) return <span>...</span>
-                return (
-                    <>
-                        <h1>
-                            {i18n.t('Hello {{name}}', { name: data.me.name })}
-                        </h1>
-                        <h3>{i18n.t('Welcome to DHIS2!')}</h3>
-                    </>
-                )
-            }}
-        </DataQuery>
-    </div>
-)
+function MyApp() {
+    const [activePage, setActivePage] = useState("Datasets");
+    const me = useDataQuery(query);
+    const dataSets = useDataQuery(dataSetsQuery)
+    if (me.data) {
+        console.log(me.data);
+    }
+    if (dataSets.data) {
+        console.log(dataSets.data);
+    }
 
-export default MyApp
+    function activePageHandler(page) {
+        setActivePage(page);
+    }
+
+    return (
+        <div className={classes.container}>
+            <div className={classes.left}>
+                <Navigation
+                    activePage={activePage}
+                    activePageHandler={activePageHandler}
+                />
+            </div>
+            <div className={classes.right}>
+                {activePage === "Browse" && <Browse/>}
+                {/*    {activePage === "Insert" && <Insert/>}*/}
+                {/*    {activePage === "Datasets" && <Datasets/>}*/}
+            </div>
+        </div>
+    );
+}
+
+export default MyApp;
