@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./App.module.css";
 import {useState} from "react";
 
-import {Browse} from "./Browse";
+import {Balance} from "./Balance";
 // import {Insert} from "./Insert";
 // import {Datasets} from "./Datasets";
 
@@ -44,14 +44,14 @@ const dataSetsQuery = {
 }
 
 function MyApp() {
-    const [activePage, setActivePage] = useState("Datasets");
+    const [activePage, setActivePage] = useState("Balance");
     const me = useDataQuery(query);
     const dataSets = useDataQuery(dataSetsQuery)
     if (me.data) {
-        console.log(me.data);
+        // console.log(me.data);
     }
     if (dataSets.data) {
-        console.log(dataSets.data);
+        // console.log(dataSets.data);
     }
 
     function activePageHandler(page) {
@@ -67,7 +67,7 @@ function MyApp() {
                 />
             </div>
             <div className={classes.right}>
-                {activePage === "Browse" && <Browse/>}
+                {activePage === "Balance" && <Balance/>}
                 {/*    {activePage === "Insert" && <Insert/>}*/}
                 {/*    {activePage === "Datasets" && <Datasets/>}*/}
             </div>
