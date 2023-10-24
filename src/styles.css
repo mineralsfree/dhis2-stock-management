@@ -1,15 +1,35 @@
+.my-form-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow forms to wrap to the next line on smaller screens */
+
+  }
 .my-form {
     display: flex;
     flex-direction: column;
-    border: '1px solid ';
-    
+    border: 1px solid black;    
     width: 500px;
-    justify-content: center;
+    justify-content: left;
+    padding: 20px;
     
-    margin: 0px;
-
-
-
+    flex: 1; /* Take up the available space */
+    margin-right: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px; /* Add vertical spacing between forms */
+    max-width: 100%;
+}
+.my-form-left{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 500px;
+    justify-content: right;
+    flex: 1; /* Take up the available space */
+    margin-bottom: 10px; /* Add vertical spacing between forms */
+    padding: 20px;
+    margin-right: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px; /* Add vertical spacing between forms */
+    max-width: 100%;
 }
 
 .form-row {
@@ -40,8 +60,23 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    
+}
+.button{
+    background-color:#ffcccb ;
 }
 .span{
     margin-top: 100px;
 
 }
+/*responsive*/
+@media (max-width: 768px) {
+    .my-form-container {
+      flex-direction: column; /* Stack forms vertically on smaller screens */
+    }
+  
+    .my-form, .my-form-left {
+      margin-right: 0; /* Remove horizontal margin on smaller screens */
+    }
+  }
+/*body css syles*/

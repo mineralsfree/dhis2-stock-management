@@ -99,7 +99,11 @@ export function Commodity() {
         // console.log(mergedData);
         return (
             <div>
+                
+          <div className="my-form-container">
      <form className="my-form">
+     <h2>Register dispens</h2>
+
 
       <div className="form-row">
         <div>
@@ -227,17 +231,37 @@ export function Commodity() {
           name="Basic button"
           onClick={handleInputChange}
           value="default"
+          className="button"
+
         >
           Save
         </Button>
       </div>
-    </form>
+       </form>
 
-                
-                <h2>Table of Commodity dispesing registy</h2>
-            <Table>
-                
-                <TableHead>
+       <form className="my-form-left">
+       <h2>Add new resipient</h2>
+
+        <div className="form-row">
+        <InputField label="Name" name="defaultName" onChange={handleInputChange} />
+        </div>
+        <div className="form-row">
+        <InputField label=" Department" name="defaultName" onChange={handleInputChange} />
+        </div>
+<div className="form-button">
+  <Button
+    name="Basic button"
+    className="button"
+    onClick={handleInputChange}
+    value="default">Save
+
+  </Button>
+    </div>
+         </form>
+        </div>
+        <h2>Table of Commodity dispesing registy</h2>
+            <Table>    
+             <TableHead>
                     <TableRowHead>
                         <TableCellHead>Time</TableCellHead>
                         <TableCellHead>Commodity</TableCellHead>
@@ -255,10 +279,11 @@ export function Commodity() {
                             <TableRow key={row.id}>
                                 <TableCell>{row.displayName}</TableCell>
                                 <TableCell>{row.value}</TableCell>
-                                {/*<TableCell>{row.id}</TableCell>*/}
                                 <TableCell>{row.category}</TableCell>
                                 <TableCell>{row.category}</TableCell>    
                                 <TableCell>{row.category}</TableCell>
+                                <TableCell>{row.category}</TableCell>
+
                             </TableRow>
                         )
                     })}
