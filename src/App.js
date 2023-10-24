@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./App.module.css";
 import {useState} from "react";
 
+import {Commodity} from "./Commodity";
 import {Balance} from "./Balance";
 // import {Insert} from "./Insert";
 // import {Datasets} from "./Datasets";
@@ -69,7 +70,7 @@ function MyApp() {
             <div className={classes.right}>
                 {activePage === "Balance" && <Balance/>}
                 {/*    {activePage === "Insert" && <Insert/>}*/}
-                {/*    {activePage === "Datasets" && <Datasets/>}*/}
+                {activePage === "Commodity" && <Commodity/>}
             </div>
         </div>
     );
