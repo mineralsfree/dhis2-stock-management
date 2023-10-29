@@ -1,0 +1,25 @@
+.amount_input{
+  width: 300px;
+}
+.form{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.form_column{
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.form_column_container{
+  display: flex;
+  justify-content: space-between;
+
+}
+.date_input, .time_input {
+  height: 43px;
+  padding: 0 24px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  line-height: 19px;
+}
