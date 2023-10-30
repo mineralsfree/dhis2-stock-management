@@ -15,14 +15,14 @@ export function Navigation(props) {
         onClick={() => props.activePageHandler("Insert")}
       />
       <MenuItem
-            label="Commodity"
+            label="Commodity dispensing"
             active={props.activePage === "Commodity"}
             onClick={() => props.activePageHandler("Commodity")}
         />
         <MenuItem
-            label="Datasets"
-            active={props.activePage === "Datasets"}
-            onClick={() => props.activePageHandler("Datasets")}
+            label="Delivery"
+            active={props.activePage === "Delivery"}
+            onClick={() => props.activePageHandler("Delivery")}
         />
     </Menu>
   );
