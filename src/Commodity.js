@@ -12,6 +12,7 @@ import {
   TableRow,
   TableRowHead,
 } from "@dhis2/ui";
+import { useCommodities } from "./hooks/useCommodities";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
 
 const dataQuery = {
@@ -42,7 +43,7 @@ const dataQuery = {
   dataValueSets: {
     resource: "dataValueSets",
     params: {
-      orgUnit: "KiheEgvUZ0i",
+      orgUnit: "ImspTQPwCqd",
       dataSet: "aLpVgfXiz0f",
       period: "2020",
     },
@@ -52,7 +53,7 @@ const dataQuery = {
     params: {
       dataSet: "ULowA8V3ucd",
       period: "202310",
-      orgUnit: "ZpE2POxvl9P",
+      orgUnit: "ImspTQPwCqd",
     },
   },
 };
@@ -83,12 +84,13 @@ const dataMutationQuery = {
   completeDate: ({ completeDate }) => completeDate,
   data: ({ dataValues }) => ({
     period: "202310",
-    orgUnit: "KiheEgvUZ0i",
+    orgUnit: "ImspTQPwCqd",
     dataValues: dataValues.map((dataValue) => ({
       dataElement: dataValue.dataElement,
       categoryOptionCombo: "J2Qf1jtZuj8", // consumption
       value: dataValue.value,
-      storedBy: ({ storedBy }) => storedBy,
+      storedBy: "johnabel", // can be ignored?
+      comment: "test2",
     })),
   }),
 };
@@ -96,24 +98,15 @@ const dataMutationQuery = {
 export function Commodity() {
   const [mutate, { loading, error }] = useDataMutation(dataMutationQuery);
 
-  const handleSubmit = (values, ids) => {
+  const handleSubmit = (formInput) => {
     console.log("Submitted2");
-    console.log(values, ids);
-
-    const dateDispensed = values["dateDispensed"];
-    const dataValues = ids.map((id) => ({
-      dataElement: values[`commodity_${id}`],
-      value: values[`amount_${id}`],
-    }));
-    const storedBy = values["dispensedBy"];
-    const orgUnit = values["dispensedTo"];
-
-    console.log(dataValues);
+    const storedBy = formInput.dispensedBy;
+    const orgUnit = formInput.dispensedTo;
 
     mutate({
-      completeDate: dateDispensed,
-      dataValues: dataValues,
-      storedBy: "SOMETHINGWORKS",
+      completeDate: formInput.dateDispensed,
+      dataValues: formInput.dataValues,
+      //   storedBy: "SOMETHINGWORKS",
     })
       .then((res) => {
         console.log(res);
@@ -131,8 +124,8 @@ export function Commodity() {
 }
 
 function CommodityTable() {
-  const { loading, error, data } = useDataQuery(dataQuery);
-  //   const { loading2, error2, commodities2, refetch2 } = useCommodities();
+  //   const { loading, error, data } = useDataQuery(dataQuery);
+  const { loading, error, commodities, refetch } = useCommodities();
   const handleInputChange = (event) => {
     console.log(event.target.value);
   };
@@ -145,16 +138,23 @@ function CommodityTable() {
     return <CircularLoader large />;
   }
 
-  if (!data) {
+  if (!commodities) {
     return null;
   }
 
-  // Sort by category
-  let mergedData = mergeData(data).sort((a, b) =>
-    a.category > b.category ? -1 : 1
-  );
-  // console.log(data);
-  // console.log(mergedData);
+  const tabledata = [];
+  Object.values(commodities).forEach((category) => {
+    category.forEach((commodity) => {
+      tabledata.push({
+        label: commodity.displayName,
+        value: commodity.id,
+        inStock: commodity.inStock,
+        consumption: commodity.consumption,
+        endBalance: commodity.endBalance,
+        category: commodity.category,
+      });
+    });
+  });
 
   return (
     <>
@@ -162,25 +162,21 @@ function CommodityTable() {
       <Table>
         <TableHead>
           <TableRowHead>
-            <TableCellHead>Time</TableCellHead>
             <TableCellHead>Commodity</TableCellHead>
-            <TableCellHead>Amount</TableCellHead>
-            <TableCellHead>Dispensed by</TableCellHead>
-            <TableCellHead>Dispensed to</TableCellHead>
-            <TableCellHead>Data</TableCellHead>
-
-            {/*<TableCellHead>ID</TableCellHead>*/}
+            <TableCellHead>End balance</TableCellHead>
+            <TableCellHead>Consumption</TableCellHead>
+            <TableCellHead>Current stock</TableCellHead>
+            <TableCellHead>Category</TableCellHead>
           </TableRowHead>
         </TableHead>
         <TableBody>
-          {mergedData.map((row) => {
+          {tabledata.map((row) => {
             return (
               <TableRow key={row.id}>
-                <TableCell>{row.displayName}</TableCell>
-                <TableCell>{row.value}</TableCell>
-                {/*<TableCell>{row.id}</TableCell>*/}
-                <TableCell>{row.category}</TableCell>
-                <TableCell>{row.category}</TableCell>
+                <TableCell>{row.label}</TableCell>
+                <TableCell>{row.endBalance}</TableCell>
+                <TableCell>{row.consumption}</TableCell>
+                <TableCell>{row.inStock}</TableCell>
                 <TableCell>{row.category}</TableCell>
               </TableRow>
             );

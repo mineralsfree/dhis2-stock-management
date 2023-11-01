@@ -1,6 +1,9 @@
 import {useState} from 'react';
 import {useDataQuery} from "@dhis2/app-runtime";
 
+const END_BALANCE_ID = "rQLFnNXXIL0"
+const CONSUMPTION_ID = "J2Qf1jtZuj8"
+
 const dataQuery = {
     commoditiesSet: {
         resource: 'dataSets/ULowA8V3ucd',
@@ -17,21 +20,32 @@ const dataQuery = {
         params: {
             dataSet: 'ULowA8V3ucd',
             period: '202310',
-            orgUnit: "ZpE2POxvl9P"
+            orgUnit: "ImspTQPwCqd"
         }
     }
 }
 const mergeData = (data) => {
     const retObj = {};
+    console.log("oooo");
+    console.log(data);
     data.commoditiesSet.dataSetElements.forEach(d => {
-        let matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id);
+        const displayName = d.dataElement.displayName.replace(/Commodities( - )?/, '').trim();
+        let endBalance = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === END_BALANCE_ID)?.value;
+        endBalance = endBalance ? parseInt(endBalance) : 0;
+        let consumption = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === CONSUMPTION_ID)?.value;
+        console.log("consumption", displayName, consumption);
+        consumption = consumption ? parseInt(consumption) : 0;
+        // const category = d.dataElement.dataElementGroups[0].name.replace(/Commodities( - )?/, '').trim();
+        const inStock = endBalance ? parseInt(endBalance) - (consumption ? parseInt(consumption) : 0) : 0;
         // get longer group (category) and remove "Comodity" prefix
-        let category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '').trim();
-        let element = {
-            displayName: d.dataElement.name.replace(/Commodities( - )?/, ''),
+        const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '').trim();
+        const element = {
+            displayName: displayName,
             id: d.dataElement.id,
-            value: matchedValue.value,
-            category
+            endBalance: endBalance,
+            consumption: consumption,
+            inStock: inStock,
+            category: category,
         };
         retObj[category] = retObj[category] ? [...retObj[category], element] : [element];
     })

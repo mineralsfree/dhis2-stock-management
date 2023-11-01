@@ -54,21 +54,25 @@ export default function CommodityDispenseForm({ handleRegister }) {
       commodityOptions.push({
         label: commodity.displayName,
         value: commodity.id,
-        inStock: commodity.value,
+        inStock: commodity.inStock,
+        consumption: commodity.consumption,
+        endBalance: commodity.endBalance,
       });
     });
   });
 
-  const stockBalance = (id) => {
-    return parseInt(commodityOptions.find((com) => com.value === id).inStock);
-  };
+  // Sort commodity options by category
+  commodityOptions.sort((a, b) => {
+    if (a.category < b.category) {
+      return -1;
+    }
+    return 1;
+  });
 
-  const enoughInStock = (value, id) => {
-    if (!value || !id) return false;
-    console.log("Enough in stock");
-    console.log(value);
-    return stockBalance(id) < parseInt(value);
-  };
+  const stockBalance = (id) =>
+    parseInt(commodityOptions.find((com) => com.value === id).inStock);
+  const currentConsumption = (id) =>
+    parseInt(commodityOptions.find((com) => com.value === id).consumption);
 
   console.log("Commodities");
   console.log(commodities);
@@ -82,7 +86,20 @@ export default function CommodityDispenseForm({ handleRegister }) {
           <ReactFinalForm.Form
             onSubmit={(values) => {
               console.log("Submitted");
-              handleRegister(values, commodityBulk);
+              console.log(values);
+              const formInput = {
+                dispensedBy: values["dispensedBy"],
+                dispensedTo: values["dispensedTo"],
+                dateDispensed: values["dateDispensed"],
+                timeDispensed: values["timeDispensed"],
+                dataValues: commodityBulk.map((c) => ({
+                  dataElement: values[`commodity_${c}`],
+                  value:
+                    parseInt(values[`amount_${c}`]) +
+                    currentConsumption(values[`commodity_${c}`]),
+                })),
+              };
+              handleRegister(formInput);
             }}
           >
             {({ values, handleSubmit }) => (

@@ -40,7 +40,7 @@ const dataQuery = {
   dataValueSets: {
     resource: "dataValueSets",
     params: {
-      orgUnit: "KiheEgvUZ0i",
+      orgUnit: "ImspTQPwCqd",
       dataSet: "aLpVgfXiz0f",
       period: "2020",
     },
@@ -50,7 +50,7 @@ const dataQuery = {
     params: {
       dataSet: "ULowA8V3ucd",
       period: "202310",
-      orgUnit: "ZpE2POxvl9P",
+      orgUnit: "ImspTQPwCqd",
     },
   },
 };
