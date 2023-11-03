@@ -1,5 +1,4 @@
 import React from "react";
-import { useDataQuery } from "@dhis2/app-runtime";
 import { useDataMutation } from "@dhis2/app-runtime";
 import { CircularLoader } from "@dhis2/ui";
 import "./styles.css";
@@ -56,25 +55,6 @@ const dataQuery = {
       orgUnit: "ImspTQPwCqd",
     },
   },
-};
-
-const mergeData = (data) => {
-  return data.commoditiesSet.dataSetElements.map((d) => {
-    let matchedValue = data.commoditiesValue.dataValues.find((dataValues) => {
-      if (dataValues.dataElement === d.dataElement.id) {
-        return true;
-      }
-    });
-    return {
-      displayName: d.dataElement.name.replace(/Commodities( - )?/, ""),
-      id: d.dataElement.id,
-      value: matchedValue.value,
-      // get longer group (category) and remove "Comodity" prefix
-      category: d.dataElement.dataElementGroups
-        .sort((a, b) => b.name.length - a.name.length)[0]
-        .name.replace(/Commodities( - )?/, ""),
-    };
-  });
 };
 
 const dataMutationQuery = {
