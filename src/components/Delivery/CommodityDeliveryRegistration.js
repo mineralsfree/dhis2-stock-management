@@ -1,42 +1,44 @@
 import React, {useState} from "react";
-import {useDataQuery} from '@dhis2/app-runtime'
+import {useDataMutation} from '@dhis2/app-runtime'
 import {CircularLoader} from "@dhis2/ui";
 import "../../styles.css";
 import styles from './CommodityDeliveryRegistration.module.css';
 import {
-    DropdownButton,
-    FlyoutMenu,
     Input,
-    MenuItem,
     Button
 } from '@dhis2/ui'
 import {CommoditySelect} from "../common/CommoditySelect/CommoditySelect";
 import {useCommodities} from "../../hooks/useCommodities";
 import {InputWrapper} from "../common/InputWrapper/InputWrapper";
 
+const dataMutationQuery = {
+    dataSet: "ULowA8V3ucd",
+    resource: "dataStore/mikimami/recipients",
+    type: "update",
+    data: (recipients)=>({recipients})
+}
 export const CommodityDeliveryRegistration = (props) => {
+    const [mutate, {}] = useDataMutation(dataMutationQuery);
     const {user} = props;
     const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
     const [amount, setAmount] = useState('0');
-    const [time, setTime] = useState(new Date().toTimeString().slice(0,5))
+    const [time, setTime] = useState(new Date().toTimeString().slice(0, 5))
     const [selectedCommodity, setSelectedCommodity] = useState(null);
-    const {loading, error, commodities} = useCommodities();
-    console.log(user);
+    const {loading: commoditiesLoading, error, commodities} = useCommodities();
     const handleDateChange = (event) => {
+        mutate([{name: 'BILLY HERRINGTON', dep: 'Clincs number 2'},{name: "PETRO POROSHENKO", dep: 'ukrnastup'}])
+            .then((res) => {})
+            .catch((error) => console.log(error));
         setDate(event);
     };
-    const handleTimeChange = (event)=>{
+    const handleTimeChange = (event) => {
         setTime(event)
     }
-    const handleAmountChange = (event) => {
-
-    }
-
     if (error) {
         return <span>ERROR: {error.message}</span>
     }
 
-    if (loading) {
+    if (commoditiesLoading || recipientsLoading) {
         return <CircularLoader large/>
     }
 
