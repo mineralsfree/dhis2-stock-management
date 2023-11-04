@@ -11,14 +11,17 @@ import {
   IconAdd24,
   CircularLoader,
   IconDelete24,
+  Input,
 } from "@dhis2/ui";
 
 import React, { useState } from "react";
 import styles from "./CommodityDispenseForm.module.css";
 import { useCommodities } from "../../hooks/useCommodities";
+import {InputWrapper} from "../common/InputWrapper/InputWrapper";
 import {commoditiesToOptions, stockBalanceById} from "../../utils/CommoditiesUtils";
 import {useRecipients} from "../../hooks/useRecipients";
 import {recipientsToOptions} from "../../utils/recepientsUtils";
+
 // Fix these later
 const dispensedByOptions = [
   { value: "johndoe", label: "John Doe" },
@@ -43,6 +46,8 @@ export default function CommodityDispenseForm({ handleRegister }) {
   if (commoditiesLoading || recipientsLoading) {
     return null
   }
+  const [showAmountInputs, setShowAmountInputs] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   if (error) {
     return <span>ERROR: {error.message}</span>;
@@ -63,10 +68,11 @@ export default function CommodityDispenseForm({ handleRegister }) {
   console.log(commodityOptions);
 
   return (
-    <div className={styles.form}>
-      <Card style={{ padding: "24px" }}>
-        <div style={{ padding: "24px" }}>
-          <h3>Register commodity dispense</h3>
+    <div className={styles.c}>
+     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridGap: '10px', margin: '10px' }}>
+    <Card style={{ padding: "24px", background: "white" }}>
+      <div style={{ padding: "24px" }}>
+         <h3>Register commodity dispense</h3>
           <ReactFinalForm.Form
             onSubmit={(values) => {
               console.log("Submitted");
@@ -162,6 +168,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                           <IconDelete24 />
                         </div>
                       )}
+
                     </div>
                   );
                 })}
@@ -207,6 +214,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                     validate={hasValue}
                   />
                 </div>
+
                 <Button type="submit" primary>
                   Register
                 </Button>
@@ -215,6 +223,74 @@ export default function CommodityDispenseForm({ handleRegister }) {
           </ReactFinalForm.Form>
         </div>
       </Card>
-    </div>
+
+
+      <div style={{ background: "none"}}>
+        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+         <Chip
+            icon={<IconAdd24 />}
+            onClick={() => {
+              setShowForm(true); // Show the form when the "Add" icon is clicked.
+            }}
+            selected
+          >
+            {"Add new recipient"}
+          </Chip>
+        </div>
+
+        {showForm && (
+          <ReactFinalForm.Form
+            onSubmit={(values) => {
+              console.log("Submitted");
+              handleRegister(values, commodityBulk);
+            }}
+          >
+            {({ values, handleSubmit }) => (
+              <form onSubmit={handleSubmit}>
+                {commodityBulk.map((c) => {
+                  return (
+                    <div className={styles.formCommodityRow} key={c}>
+                      <div className={styles.formRow2}>
+                        <div className={`${styles.column}`}>
+                          <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
+                          <ReactFinalForm.Field
+                    name="Name"
+                    label="Name"
+                    component={SingleSelectFieldFF}
+                    options={dispensedToOptions}
+                    validate={hasValue}
+                    required
+                  />
+
+                        </div>
+                        <div className={styles.column}>
+                        <ReactFinalForm.Field
+                    name="Department"
+                    label="Department"
+                    component={SingleSelectFieldFF}
+                    options={dispensedToOptions}
+                    validate={hasValue}
+
+                    required
+                  />
+                        </div>
+                        </div>
+                        <div className={styles.column}>
+                        <Button type="submit" primary>
+                           Register
+                           </Button>
+                           </div>
+                        </div>
+                      </div>
+                  );
+                })}
+              </form>
+            )}
+          </ReactFinalForm.Form>
+        )}
+     </div>
+  </div>
+</div>
+
   );
 }
