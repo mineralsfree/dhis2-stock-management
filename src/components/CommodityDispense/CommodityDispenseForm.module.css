@@ -1,0 +1,30 @@
+.form {
+    width: 500px;
+}
+
+.form > div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    gap: 10px;
+}
+
+.formRow > div {
+    width: 200px;
+}
+
+.formCommodityRow {
+    display: flex;
+    align-items: center;
+}
+
+.formItemRemove {
+    margin-left: 1rem;
+    cursor: pointer;
+}

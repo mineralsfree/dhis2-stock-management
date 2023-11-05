@@ -4,14 +4,14 @@ import {useDataQuery} from '@dhis2/app-runtime'
 import {CircularLoader} from "@dhis2/ui";
 
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableCellHead,
-    TableHead,
-    TableRow,
-    TableRowHead,
-} from '@dhis2/ui'
+  Table,
+  TableBody,
+  TableCell,
+  TableCellHead,
+  TableHead,
+  TableRow,
+  TableRowHead,
+} from "@dhis2/ui";
 
 const dataQuery = {
     dataSets: {
@@ -36,40 +36,43 @@ const dataQuery = {
             ],
         },
     },
-    dataValueSets: {
-        resource: 'dataValueSets',
-        params: {
-            orgUnit: 'KiheEgvUZ0i',
-            dataSet: 'aLpVgfXiz0f',
-            period: '2020',
-        },
-    },
-    commoditiesValue: {
-        resource: 'dataValueSets',
-        params: {
-            dataSet: 'ULowA8V3ucd',
-            period: '202310',
-            orgUnit: "ZpE2POxvl9P"
-        }
-    }
-}
 
-const mergeData = (data)=> {
-    return data.commoditiesSet.dataSetElements.map(d => {
-        let matchedValue = data.commoditiesValue.dataValues.find(dataValues => {
-            if (dataValues.dataElement === d.dataElement.id) {
-                return true
-            }
-        })
-        return {
-            displayName: d.dataElement.name.replace(/Commodities( - )?/, ''),
-            id: d.dataElement.id,
-            value: matchedValue.value,
-            // get longer group (category) and remove "Comodity" prefix
-            category: d.dataElement.dataElementGroups.sort((a,b)=>b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '')
-        }
-    })
-}
+  dataValueSets: {
+    resource: "dataValueSets",
+    params: {
+      orgUnit: "ImspTQPwCqd",
+      dataSet: "aLpVgfXiz0f",
+      period: "2020",
+    },
+  },
+  commoditiesValue: {
+    resource: "dataValueSets",
+    params: {
+      dataSet: "ULowA8V3ucd",
+      period: "202310",
+      orgUnit: "ImspTQPwCqd",
+    },
+  },
+};
+
+const mergeData = (data) => {
+  return data.commoditiesSet.dataSetElements.map((d) => {
+    let matchedValue = data.commoditiesValue.dataValues.find((dataValues) => {
+      if (dataValues.dataElement === d.dataElement.id) {
+        return true;
+      }
+    });
+    return {
+      displayName: d.dataElement.name.replace(/Commodities( - )?/, ""),
+      id: d.dataElement.id,
+      value: matchedValue.value,
+      // get longer group (category) and remove "Comodity" prefix
+      category: d.dataElement.dataElementGroups
+        .sort((a, b) => b.name.length - a.name.length)[0]
+        .name.replace(/Commodities( - )?/, ""),
+    };
+  });
+};
 
 export function Balance() {
     const { loading, error, data } = useDataQuery(dataQuery);
