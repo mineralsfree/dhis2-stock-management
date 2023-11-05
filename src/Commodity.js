@@ -234,7 +234,8 @@ export function Commodity() {
     </form>
 
                 
-                <h2>Table of Commodity dispesing registy</h2>
+               
+                <h2>Table of registed commodity</h2>
             <Table>
                 
                 <TableHead>
