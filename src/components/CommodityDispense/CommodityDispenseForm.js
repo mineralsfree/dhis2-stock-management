@@ -39,6 +39,8 @@ const dispensedToOptions = [
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
+  const [Delete, setDelete] = useState(["1"]);
+
   // const [commodityID, setCommodityID] = useState(1);
   const { loading: commoditiesLoading, error, commodities, refetch } = useCommodities();
   const {recipients, loading: recipientsLoading } = useRecipients();
@@ -172,7 +174,6 @@ export default function CommodityDispenseForm({ handleRegister }) {
                     </div>
                   );
                 })}
-
                 <div
                   style={{
                     width: "410px",
@@ -213,16 +214,19 @@ export default function CommodityDispenseForm({ handleRegister }) {
                     initialValue={new Date().toISOString().slice(11, 16)}
                     validate={hasValue}
                   />
+
                 </div>
 
                 <Button type="submit" primary>
                   Register
                 </Button>
+
               </form>
             )}
           </ReactFinalForm.Form>
         </div>
       </Card>
+
 
 
       <div style={{ background: "none"}}>
@@ -237,24 +241,26 @@ export default function CommodityDispenseForm({ handleRegister }) {
             {"Add new recipient"}
           </Chip>
         </div>
-
+        {Delete.map((c, index) => {
+       return (
+        <div>
         {showForm && (
           <ReactFinalForm.Form
             onSubmit={(values) => {
               console.log("Submitted");
-              handleRegister(values, commodityBulk);
+              handleRegister(values, setDelete);
             }}
           >
             {({ values, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
-                {commodityBulk.map((c) => {
+                {Delete.map((c) => {
                   return (
                     <div className={styles.formCommodityRow} key={c}>
                       <div className={styles.formRow2}>
                         <div className={`${styles.column}`}>
                           <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
                           <ReactFinalForm.Field
-                    name="Name"
+                       name={`Name[${index}]`}
                     label="Name"
                     component={SingleSelectFieldFF}
                     options={dispensedToOptions}
@@ -265,7 +271,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                         </div>
                         <div className={styles.column}>
                         <ReactFinalForm.Field
-                    name="Department"
+                    name={`Department[${index}]`}
                     label="Department"
                     component={SingleSelectFieldFF}
                     options={dispensedToOptions}
@@ -279,6 +285,21 @@ export default function CommodityDispenseForm({ handleRegister }) {
                         <Button type="submit" primary>
                            Register
                            </Button>
+                           {index !== "1" && (
+                        <div
+                          className={styles.formItemRemove}
+                          onClick={() => {
+                            setDelete((curr) =>
+                              curr.filter((cc) => cc !== c)
+                            );
+                            // reset the values
+                            values[`Name${index}`] = undefined;
+                            values[`Department[${index}]`] = undefined;
+                          }}
+                        >
+                          <IconDelete24 />
+                        </div>
+                      )}
                            </div>
                         </div>
                       </div>
@@ -288,9 +309,13 @@ export default function CommodityDispenseForm({ handleRegister }) {
             )}
           </ReactFinalForm.Form>
         )}
+        </div>
+        );
+      })}
      </div>
+
   </div>
 </div>
-
+    
   );
 }
