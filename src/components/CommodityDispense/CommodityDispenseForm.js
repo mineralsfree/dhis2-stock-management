@@ -258,34 +258,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                     <div className={styles.formCommodityRow} key={c}>
                       <div className={styles.formRow2}>
                         <div className={`${styles.column}`}>
-                          <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
-                          <ReactFinalForm.Field
-                       name={`Name[${index}]`}
-                    label="Name"
-                    component={SingleSelectFieldFF}
-                    options={dispensedToOptions}
-                    validate={hasValue}
-                    required
-                  />
-
-                        </div>
-                        <div className={styles.column}>
-                        <ReactFinalForm.Field
-                    name={`Department[${index}]`}
-                    label="Department"
-                    component={SingleSelectFieldFF}
-                    options={dispensedToOptions}
-                    validate={hasValue}
-
-                    required
-                  />
-                        </div>
-                        </div>
-                        <div className={styles.column}>
-                        <Button type="submit" primary>
-                           Register
-                           </Button>
-                           {index !== "1" && (
+                        {index !== "1" && (
                         <div
                           className={styles.formItemRemove}
                           onClick={() => {
@@ -296,10 +269,42 @@ export default function CommodityDispenseForm({ handleRegister }) {
                             values[`Name${index}`] = undefined;
                             values[`Department[${index}]`] = undefined;
                           }}
-                        >
-                          <IconDelete24 />
+                          style={{
+                            marginLeft: '200px',
+                            textalign: 'end',
+
+                            cursor: 'pointer',
+                            color: 'red', // You can adjust the color as needed
+                        }}
+                    >
+                        X
                         </div>
                       )}
+                          <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
+                          <ReactFinalForm.Field
+                          name={`Name[${index}]`}
+                          label="Name"
+                           component={InputFieldFF} // Change the component to InputFieldFF
+                           type="text" // Set the input type to text
+                           validate={hasValue}
+                          required
+    />
+              
+                        </div>
+                        <div className={styles.column}>
+                        <ReactFinalForm.Field
+                          name={`Department[${index}]`}
+                          label="Department"
+                          component={InputFieldFF}
+                           required
+                        />
+                        </div>
+                        </div>
+                        <div className={styles.column}>
+                        <Button type="submit" primary>
+                           Register
+                           </Button> 
+
                            </div>
                         </div>
                       </div>
