@@ -253,8 +253,8 @@ export default function CommodityDispenseForm({ handleRegister }) {
           >
             {({ values, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
-                {Delete.map((c) => {
-                  return (
+               
+                 
                     <div className={styles.formCommodityRow} key={c}>
                       <div className={styles.formRow2}>
                         <div className={`${styles.column}`}>
@@ -276,8 +276,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                             cursor: 'pointer',
                             color: 'red', // You can adjust the color as needed
                         }}
-                    >
-                        X
+                        >X
                         </div>
                       )}
                           <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
@@ -307,9 +306,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
 
                            </div>
                         </div>
-                      </div>
-                  );
-                })}
+                      </div>      
               </form>
             )}
           </ReactFinalForm.Form>
