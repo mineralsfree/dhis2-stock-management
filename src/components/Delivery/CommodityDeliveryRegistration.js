@@ -38,7 +38,7 @@ export const CommodityDeliveryRegistration = (props) => {
         return <span>ERROR: {error.message}</span>
     }
 
-    if (commoditiesLoading || recipientsLoading) {
+    if (commoditiesLoading) {
         return <CircularLoader large/>
     }
 
