@@ -16,9 +16,9 @@ import {
 import React, { useState } from "react";
 import styles from "./CommodityDispenseForm.module.css";
 import { useCommodities } from "../../hooks/useCommodities";
+import {commoditiesToOptions, stockBalanceById} from "../../utils/CommoditiesUtils";
 import {useRecipients} from "../../hooks/useRecipients";
 import {recipientsToOptions} from "../../utils/recepientsUtils";
-
 // Fix these later
 const dispensedByOptions = [
   { value: "johndoe", label: "John Doe" },
@@ -52,30 +52,9 @@ export default function CommodityDispenseForm({ handleRegister }) {
     return null;
   }
 
-  const commodityOptions = [];
+  const commodityOptions =commoditiesToOptions(commodities);
 
-  Object.values(commodities).forEach((category) => {
-    category.forEach((commodity) => {
-      commodityOptions.push({
-        label: commodity.displayName,
-        value: commodity.id,
-        inStock: commodity.inStock,
-        consumption: commodity.consumption,
-        endBalance: commodity.endBalance,
-      });
-    });
-  });
-
-  // Sort commodity options by category
-  commodityOptions.sort((a, b) => {
-    if (a.category < b.category) {
-      return -1;
-    }
-    return 1;
-  });
-
-  const stockBalance = (id) =>
-    parseInt(commodityOptions.find((com) => com.value === id).inStock);
+  const stockBalance = (id)=>stockBalanceById(commodityOptions, id);
   const currentConsumption = (id) =>
     parseInt(commodityOptions.find((com) => com.value === id).consumption);
 

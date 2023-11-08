@@ -1,8 +1,7 @@
 import {useState} from 'react';
 import {useDataQuery} from "@dhis2/app-runtime";
+import {CONSUMPTION_ID, END_BALANCE_ID} from "../consts";
 
-const END_BALANCE_ID = "rQLFnNXXIL0"
-const CONSUMPTION_ID = "J2Qf1jtZuj8"
 
 const dataQuery = {
     commoditiesSet: {
@@ -55,14 +54,23 @@ const mergeData = (data) => {
 
 export const useCommodities = () => {
     const [commodities, setCommodities] = useState(null);
-    const {loading, error, data, refetch} = useDataQuery(dataQuery)
+    const [refetchLoading, setRefetchLoading] = useState(false);
+    const {loading, error, data, refetch: internalRefetch} = useDataQuery(dataQuery);
+    const refetch = () => {
+        setRefetchLoading(true)
+        internalRefetch()
+            .then(value => {
+                setCommodities(mergeData(value));
+                setRefetchLoading(false);
+            })
+    }
     //in order to refetch to work;
-    if (loading && commodities){
+    if (refetchLoading && commodities) {
         setCommodities(null);
     }
-    if (data && !commodities) {
+    if (data && !commodities && !refetchLoading) {
         setCommodities(mergeData(data));
     }
-    return {loading, error, commodities, refetch};
+    return {loading: loading || refetchLoading, error, commodities, refetch};
 
 }

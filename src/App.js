@@ -4,13 +4,11 @@ import {useState} from "react";
 
 import {Commodity} from "./Commodity";
 import {Balance} from "./Balance";
-// import {Insert} from "./Insert";
-// import {Datasets} from "./Datasets";
 import {CircularLoader} from "@dhis2/ui";
-
+import  { Toaster } from 'react-hot-toast';
 import {Navigation} from "./Navigation";
 import {useDataQuery} from "@dhis2/app-runtime";
-import {CommodityDeliveryRegistration} from "./components/Delivery/CommodityDeliveryRegistration";
+import {CommodityDeliveryRegistrationPage} from "./components/Delivery/CommodityDeliveryRegistrationPage";
 
 const query = {
     me: {
@@ -48,8 +46,9 @@ function MyApp() {
                 {activePage === "Balance" && <Balance/>}
                 {/*    {activePage === "Insert" && <Insert/>}*/}
                 {activePage === "Commodity" && <Commodity/>}
-                {activePage === "Delivery" && <CommodityDeliveryRegistration user={data.me}/>}
+                {activePage === "Delivery" && <CommodityDeliveryRegistrationPage user={data.me}/>}
             </div>
+            <Toaster/>
         </div>
     );
 }
