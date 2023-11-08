@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import {useDataQuery} from '@dhis2/app-runtime'
 import {CircularLoader} from "@dhis2/ui";
 
+
 import {
   Table,
   TableBody,
@@ -88,8 +89,10 @@ export function Balance() {
     if (data) {
         const groupedData = data.commoditiesSet.dataSetElements.reduce((acc, d) => {
             const displayName = d.dataElement.name.replace(/Commodities( - )?/, '');
-            const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id);
+            const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === "rQLFnNXXIL0") ;
             const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '');
+
+            
 
             if (!acc[category]) {
                 acc[category] = [];
