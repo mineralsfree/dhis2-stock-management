@@ -1,6 +1,8 @@
-import React from "react";
-import { useDataQuery } from "@dhis2/app-runtime";
-import { CircularLoader } from "@dhis2/ui";
+
+import React, { useState } from "react";
+import {useDataQuery} from '@dhis2/app-runtime'
+import {CircularLoader} from "@dhis2/ui";
+
 
 import {
   Table,
@@ -13,30 +15,29 @@ import {
 } from "@dhis2/ui";
 
 const dataQuery = {
-  dataSets: {
-    resource: "dataSets/aLpVgfXiz0f",
-    params: {
-      fields: [
-        "name",
-        "id",
-        "*",
-        "dataSetElements[dataElement[id, displayName]",
-        // 'dataSetElements[dataElement[*]'
-      ],
+    dataSets: {
+        resource: 'dataSets/aLpVgfXiz0f',
+        params: {
+            fields: [
+                'name',
+                'id',
+                '*',
+                'dataSetElements[dataElement[id, displayName]',
+            ],
+        },
     },
-  },
-  commoditiesSet: {
-    resource: "dataSets/ULowA8V3ucd",
-    params: {
-      fields: [
-        "*",
-        "name",
-        "id",
-        // 'dataSetElements[dataElement[id, displayName]',
-        "dataSetElements[dataElement[name,displayName, id,dataElementGroups[name], categoryCombo[name,id,categoryOptionCombos[name,id, *]]]",
-      ],
+    commoditiesSet: {
+        resource: 'dataSets/ULowA8V3ucd',
+        params: {
+            fields: [
+                '*',
+                'name',
+                'id',
+                'dataSetElements[dataElement[name,displayName, id,dataElementGroups[name], categoryCombo[name,id,categoryOptionCombos[name,id, *]]]'
+            ],
+        },
     },
-  },
+
   dataValueSets: {
     resource: "dataValueSets",
     params: {
@@ -75,46 +76,61 @@ const mergeData = (data) => {
 };
 
 export function Balance() {
-  const { loading, error, data } = useDataQuery(dataQuery);
-  if (error) {
-    return <span>ERROR: {error.message}</span>;
-  }
+    const { loading, error, data } = useDataQuery(dataQuery);
 
-  if (loading) {
-    return <CircularLoader large />;
-  }
+    if (error) {
+        return <span>ERROR: {error.message}</span>;
+    }
 
-  if (data) {
-    // Sort by category
-    let mergedData = mergeData(data).sort((a, b) =>
-      a.category > b.category ? -1 : 1
-    );
-    console.log(data);
-    console.log(mergedData);
-    return (
-      <Table>
-        <TableHead>
-          <TableRowHead>
-            <TableCellHead>Commodity</TableCellHead>
-            <TableCellHead>Stock balance</TableCellHead>
-            {/*<TableCellHead>ID</TableCellHead>*/}
-            <TableCellHead>Category</TableCellHead>
-          </TableRowHead>
-        </TableHead>
-        <TableBody>
-          {mergedData.map((row) => {
-            return (
-              <TableRow key={row.id}>
-                <TableCell>{row.displayName}</TableCell>
-                <TableCell>{row.value}</TableCell>
-                {/*<TableCell>{row.id}</TableCell>*/}
-                <TableCell>{row.category}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    );
-  }
-  return <h1>Browse</h1>;
+    if (loading) {
+        return <CircularLoader large />;
+    }
+
+    if (data) {
+        const groupedData = data.commoditiesSet.dataSetElements.reduce((acc, d) => {
+            const displayName = d.dataElement.name.replace(/Commodities( - )?/, '');
+            const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === "rQLFnNXXIL0") ;
+            const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '');
+
+            
+
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+
+            acc[category].push({ displayName, value: matchedValue.value, id: d.dataElement.id });
+
+            return acc;
+        }, {});
+
+        return (
+            <Table>
+                <TableHead>
+                    <TableRowHead>
+                        <TableCellHead>Category</TableCellHead>
+                        <TableCellHead>Commodity</TableCellHead>
+                        <TableCellHead>Stock balance</TableCellHead>
+                    </TableRowHead>
+                </TableHead>
+                <TableBody>
+                    {Object.keys(groupedData).map(category => (
+                        <React.Fragment key={category}>
+                            <TableRow>
+                                <TableCell className="category" colSpan={3}>{category}</TableCell>
+                            </TableRow>
+                            {groupedData[category].map(row => (
+                                <TableRow key={row.id}>
+                                    <TableCell></TableCell>
+                                    <TableCell>{row.displayName}</TableCell>
+                                    <TableCell>{row.value}</TableCell>
+                                </TableRow>
+                            ))}
+                        </React.Fragment>
+                    ))}
+                </TableBody>
+            </Table>
+        );
+    }
+
+    return <h1>Browse</h1>;
 }

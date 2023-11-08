@@ -158,7 +158,7 @@ function CommodityTable() {
 
   return (
     <>
-      <h2>Table of Commodity dispesing registy</h2>
+      <h2>Table of Registered Commodities</h2>
       <Table>
         <TableHead>
           <TableRowHead>
