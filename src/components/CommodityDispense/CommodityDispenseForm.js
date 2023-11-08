@@ -274,9 +274,9 @@ export default function CommodityDispenseForm({ handleRegister }) {
                             textalign: 'end',
 
                             cursor: 'pointer',
-                            color: 'red', // You can adjust the color as needed
-                        }}
-                        >X
+                            color: 'red',
+                        }}>
+                        X
                         </div>
                       )}
                           <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
@@ -284,7 +284,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                           name={`Name[${index}]`}
                           label="Name"
                            component={InputFieldFF} // Change the component to InputFieldFF
-                           type="text" // Set the input type to text
+                           type="text" 
                            validate={hasValue}
                           required
     />
