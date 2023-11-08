@@ -15,10 +15,13 @@
     gap: 10px;
 }
 
-.formRow > div {
+
+.field{
     width: 200px;
 }
-
+.recipient_field{
+    width: 100%;
+}
 .formCommodityRow {
     display: flex;
     align-items: center;

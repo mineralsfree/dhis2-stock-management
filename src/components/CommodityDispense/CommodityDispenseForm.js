@@ -9,11 +9,15 @@ import {
   Button,
   Chip,
   IconAdd24,
+  CircularLoader,
   IconDelete24,
 } from "@dhis2/ui";
-import { useState } from "react";
+
+import React, { useState } from "react";
 import styles from "./CommodityDispenseForm.module.css";
 import { useCommodities } from "../../hooks/useCommodities";
+import {useRecipients} from "../../hooks/useRecipients";
+import {recipientsToOptions} from "../../utils/recepientsUtils";
 
 // Fix these later
 const dispensedByOptions = [
@@ -33,10 +37,11 @@ const dispensedToOptions = [
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
   // const [commodityID, setCommodityID] = useState(1);
-  const { loading, error, commodities, refetch } = useCommodities();
-
-  if (loading) {
-    return null;
+  const { loading: commoditiesLoading, error, commodities, refetch } = useCommodities();
+  const {recipients, loading: recipientsLoading } = useRecipients();
+  const recipientsOptions = recipientsToOptions(recipients);
+  if (commoditiesLoading || recipientsLoading) {
+    return null
   }
 
   if (error) {
@@ -106,20 +111,24 @@ export default function CommodityDispenseForm({ handleRegister }) {
               <form onSubmit={handleSubmit}>
                 <div className={styles.formRow}>
                   <ReactFinalForm.Field
+                      className={styles.recipient_field}
                     name="dispensedBy"
                     label="Dispensed by"
                     component={SingleSelectFieldFF}
-                    options={dispensedByOptions}
+                    options={recipientsOptions}
                     validate={hasValue}
                     required
                   />
+                </div>
+                <div className={styles.formRow}>
                   <ReactFinalForm.Field
-                    name="dispensedTo"
-                    label="Dispensed to"
-                    component={SingleSelectFieldFF}
-                    options={dispensedToOptions}
-                    validate={hasValue}
-                    required
+                      name="dispensedTo"
+                      label="Dispensed to"
+                      className={styles.recipient_field}
+                      component={SingleSelectFieldFF}
+                      options={recipientsOptions}
+                      validate={hasValue}
+                      required
                   />
                 </div>
 
@@ -129,6 +138,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                     <div className={styles.formCommodityRow} key={c}>
                       <div className={styles.formRow}>
                         <ReactFinalForm.Field
+                            className={styles.field}
                           name={`commodity_${c}`}
                           // value={value}
                           label="Commodity"
@@ -201,6 +211,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                 <div className={styles.formRow}>
                   <ReactFinalForm.Field
                     name="dateDispensed"
+                    className={styles.field}
                     label="Date dispensed"
                     component={InputFieldFF}
                     type="date"
@@ -209,6 +220,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                   />
                   <ReactFinalForm.Field
                     name="timeDispensed"
+                    className={styles.field}
                     label="Time dispensed"
                     component={InputFieldFF}
                     type="time"
