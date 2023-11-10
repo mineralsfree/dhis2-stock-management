@@ -9,15 +9,12 @@ import {
   Button,
   Chip,
   IconAdd24,
-  CircularLoader,
   IconDelete24,
-  Input,
 } from "@dhis2/ui";
 
 import React, { useState } from "react";
 import styles from "./CommodityDispenseForm.module.css";
 import { useCommodities } from "../../hooks/useCommodities";
-import {InputWrapper} from "../common/InputWrapper/InputWrapper";
 import {commoditiesToOptions, stockBalanceById} from "../../utils/CommoditiesUtils";
 import {useRecipients} from "../../hooks/useRecipients";
 import {recipientsToOptions} from "../../utils/recepientsUtils";
@@ -41,16 +38,13 @@ export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
   const [Delete, setDelete] = useState(["1"]);
 
-  // const [commodityID, setCommodityID] = useState(1);
   const { loading: commoditiesLoading, error, commodities, refetch } = useCommodities();
   const {recipients, loading: recipientsLoading } = useRecipients();
   const recipientsOptions = recipientsToOptions(recipients);
+  const [showForm, setShowForm] = useState(false);
   if (commoditiesLoading || recipientsLoading) {
     return null
   }
-  const [showAmountInputs, setShowAmountInputs] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-
   if (error) {
     return <span>ERROR: {error.message}</span>;
   }
@@ -253,9 +247,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
           >
             {({ values, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
-               
-                 
-                    <div className={styles.formCommodityRow} key={c}>
+                 <div className={styles.formCommodityRow} key={c}>
                       <div className={styles.formRow2}>
                         <div className={`${styles.column}`}>
                         {index !== "1" && (
@@ -279,7 +271,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                         X
                         </div>
                       )}
-                          <div className={`${styles.column} ${showAmountInputs ? '' : 'hidden'}`}>
+                          <div className={`${styles.column}`}>
                           <ReactFinalForm.Field
                           name={`Name[${index}]`}
                           label="Name"
