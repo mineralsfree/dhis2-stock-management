@@ -15,6 +15,8 @@ import {
   DropdownButton,
   InputField,
   ButtonStrip,
+  FlyoutMenu,
+  MenuItem,
 } from "@dhis2/ui";
 
 
@@ -81,6 +83,7 @@ const mergeData = (data) => {
 
 export function Balance() {
     const [searchWord, setSearchWord] = useState("");
+    const [sortArg, setSortArg] = useState("");
     const { loading, error, data } = useDataQuery(dataQuery);
 
     if (error) {
@@ -113,6 +116,24 @@ export function Balance() {
         return acc;
     }, {});
 
+    let sortedCategories = Object.keys(groupedData)
+
+    if (sortArg == "alphCat" || sortArg == "alphAll"){
+        sortedCategories = Object.keys(groupedData).sort();
+    }
+
+    if(sortArg == "alphCom" || sortArg == "alphAll"){
+        Object.keys(groupedData).map((category) => {
+            groupedData[category].sort((el1, el2) => el1.displayName.localeCompare(el2.displayName));
+        })
+    }
+
+    if(sortArg == "stock"){
+        Object.keys(groupedData).map((category) => {
+            groupedData[category].sort((el1, el2) => el1.value - el2.value);
+        })
+    }
+    
    
 
     return (
@@ -127,11 +148,17 @@ export function Balance() {
                     value={searchWord}
                 />
                 <DropdownButton
-                    component={<span>Simplest thing</span>}
+                     component={<FlyoutMenu>
+                                <MenuItem label="Alphabetically" onClick={() => setSortArg("alphAll")}/>
+                                <MenuItem label="Alphabetically After Category" onClick={() => setSortArg("alphCat")}  />
+                                <MenuItem label="Alphabetically After Commodity" onClick={() => setSortArg("alphCom")} />
+                                <MenuItem label="Stock Balance" onClick={() => setSortArg("stock")} />
+                                <MenuItem label="Clear Sorting Choice" onClick={() => setSortArg("clear")} />
+                            </FlyoutMenu>}
                     name="buttonName"
                     value="buttonValue"
                 >
-                            Sorter
+                            Sort
                 </DropdownButton>
 
             </ButtonStrip>
@@ -144,7 +171,7 @@ export function Balance() {
                 </TableRowHead>
             </TableHead>
             <TableBody>
-                {Object.keys(groupedData).map(category => (
+                {sortedCategories.map(category => (
                     <React.Fragment key={category}>
                         <TableRow>
                             <TableCell className="category" colSpan={3}>{category}</TableCell>
