@@ -1,8 +1,7 @@
-
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {useDataQuery} from '@dhis2/app-runtime'
 import {CircularLoader} from "@dhis2/ui";
-
+import {ClinicTable} from "./ClinicTable";
 
 import {
   Table,
@@ -19,30 +18,31 @@ import {
   MenuItem,
 } from "@dhis2/ui";
 
+import styles from './Balance.module.css'
 
 const dataQuery = {
-    dataSets: {
-        resource: 'dataSets/aLpVgfXiz0f',
-        params: {
-            fields: [
-                'name',
-                'id',
-                '*',
-                'dataSetElements[dataElement[id, displayName]',
-            ],
-        },
+  dataSets: {
+    resource: 'dataSets/aLpVgfXiz0f',
+    params: {
+      fields: [
+        'name',
+        'id',
+        '*',
+        'dataSetElements[dataElement[id, displayName]',
+      ],
     },
-    commoditiesSet: {
-        resource: 'dataSets/ULowA8V3ucd',
-        params: {
-            fields: [
-                '*',
-                'name',
-                'id',
-                'dataSetElements[dataElement[name,displayName, id,dataElementGroups[name], categoryCombo[name,id,categoryOptionCombos[name,id, *]]]'
-            ],
-        },
+  },
+  commoditiesSet: {
+    resource: 'dataSets/ULowA8V3ucd',
+    params: {
+      fields: [
+        '*',
+        'name',
+        'id',
+        'dataSetElements[dataElement[name,displayName, id,dataElementGroups[name], categoryCombo[name,id,categoryOptionCombos[name,id, *]]]'
+      ],
     },
+  },
 
   dataValueSets: {
     resource: "dataValueSets",
@@ -80,139 +80,151 @@ const mergeData = (data) => {
     };
   });
 };
+const handleClick = (row) => {
+  setSelectedCommodity(row);
+  setShowTable(true);
+};
 
 export function Balance() {
-    const [searchWord, setSearchWord] = useState("");
-    const [sortArg, setSortArg] = useState("");
-    const { loading, error, data } = useDataQuery(dataQuery);
-    const [selectedCommodity, setSelectedCommodity] = useState(null);
-    const [showSlideLeftPage, setShowSlideLeftPage] = useState(false);
+  const [searchWord, setSearchWord] = useState("");
+  const [sortArg, setSortArg] = useState("");
+  const {loading, error, data} = useDataQuery(dataQuery);
+  const [selectedCommodity, setSelectedCommodity] = useState(null);
+  const [showTable, setShowTable] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
-    const handleTableRowClick = (row) => {
-      setSelectedCommodity(row);
-      setShowSlideLeftPage(true);
-    };
-    if (error) {
-        return <span>ERROR: {error.message}</span>;
+  const handleClick = (row) => {
+    setSelectedCommodity(row);
+    setClicked(true);
+    setShowTable(true);
+  };
+  const handleRequestClick = () => {
+    if (selectedCommodity) {
+      alert(`Commodity ${selectedCommodity.displayName} requested`);
+    } else {
+      alert('');
     }
-    console.log("showSlideLeftPage:", showSlideLeftPage);
-    console.log("selectedCommodity:", selectedCommodity);
+  };
+
+  if (error) {
+    return <span>ERROR: {error.message}</span>;
+  }
+
+  if (loading) {
+    return <CircularLoader large/>;
+  }
+
+  if (data) {
+    const groupedData = data.commoditiesSet.dataSetElements.reduce((acc, d) => {
+        const displayName = d.dataElement.name.replace(/Commodities( - )?/, '');
+        const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === "rQLFnNXXIL0");
+        const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '');
 
 
-    if (loading) {
-        return <CircularLoader large />;
+        if (!displayName.toLowerCase().includes(searchWord)) {
+          return acc;
+        }
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+
+        acc[category].push({
+          displayName,
+          value: matchedValue.value,
+          id: d.dataElement.id,
+        });
+
+        return acc;
+      },
+      {}
+    );
+    let sortedCategories = Object.keys(groupedData)
+
+    if (sortArg === "alphCat" || sortArg === "alphAll") {
+      sortedCategories = Object.keys(groupedData).sort();
     }
 
-    if (data) {
-        const groupedData = data.commoditiesSet.dataSetElements.reduce((acc, d) => {
-            const displayName = d.dataElement.name.replace(/Commodities( - )?/, '');
-            const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === "rQLFnNXXIL0") ;
-            const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '');
+    if (sortArg === "alphCom" || sortArg === "alphAll") {
+      Object.keys(groupedData).map((category) => {
+        groupedData[category].sort((el1, el2) => el1.displayName.localeCompare(el2.displayName));
+      })
+    }
 
+    if (sortArg === "stock") {
+      Object.keys(groupedData).map((category) => {
+        groupedData[category].sort((el1, el2) => el1.value - el2.value);
+      })
+    }
+    return (
+      <div>
+        <ButtonStrip class="button-container">
 
-          if(!displayName.toLowerCase().includes(searchWord)){
-            return acc;
-          }
-            if (!acc[category]) {
-                acc[category] = [];
-            }
+          <InputField
+            name="defaultName"
+            onChange={(word) => {
+              setSearchWord(word.value)
+            }}
+            placeholder="Search"
+            inputWidth="220px"
+            value={searchWord}
+          />
+          <DropdownButton
+            component={<FlyoutMenu>
+              <MenuItem label="Alphabetically" onClick={() => setSortArg("alphAll")}/>
+              <MenuItem label="Alphabetically After Category" onClick={() => setSortArg("alphCat")}/>
+              <MenuItem label="Alphabetically After Commodity" onClick={() => setSortArg("alphCom")}/>
+              <MenuItem label="Stock Balance" onClick={() => setSortArg("stock")}/>
+              <MenuItem label="Clear Sorting Choice" onClick={() => setSortArg("clear")}/>
+            </FlyoutMenu>}
+            name="buttonName"
+            value="buttonValue"
+          >
+            Sort
+          </DropdownButton>
 
-            acc[category].push({ displayName, value: matchedValue.value, id: d.dataElement.id });
+        </ButtonStrip>
+        <div style={{display: 'flex'}}>
+          <div style={{flex: 1}}><Table>
+            <TableHead>
+              <TableRowHead>
+                <TableCellHead>Category</TableCellHead>
+                <TableCellHead>Commodity</TableCellHead>
+                <TableCellHead>Stock balance</TableCellHead>
+              </TableRowHead>
+            </TableHead>
 
-            return acc;
-        }, {});
-      let sortedCategories = Object.keys(groupedData)
+            <TableBody>
+              {Object.keys(groupedData).map((category) => (
+                <React.Fragment key={category}>
+                  <TableRow>
+                    <TableCell className={styles.category} colSpan="3">{category}</TableCell>
+                  </TableRow>
+                  {groupedData[category].map((row) => (
+                    <TableRow key={row.id} className={styles.tablerow}>
 
-      if (sortArg === "alphCat" || sortArg === "alphAll"){
-        sortedCategories = Object.keys(groupedData).sort();
-      }
+                      <TableCell onClick={handleClick}>
 
-      if(sortArg === "alphCom" || sortArg === "alphAll"){
-        Object.keys(groupedData).map((category) => {
-          groupedData[category].sort((el1, el2) => el1.displayName.localeCompare(el2.displayName));
-        })
-      }
-
-      if(sortArg === "stock"){
-        Object.keys(groupedData).map((category) => {
-          groupedData[category].sort((el1, el2) => el1.value - el2.value);
-        })
-      }
-
-      return (
-          <div style={{ display: 'flex', justifyContent: 'space-between' , cursor: 'pointer' }}>
-            <ButtonStrip class="button-container">
-
-              <InputField
-                name="defaultName"
-                onChange={(word) => {setSearchWord(word.value)}}
-                placeholder="Search"
-                inputWidth="220px"
-                value={searchWord}
-              />
-              <DropdownButton
-                component={<FlyoutMenu>
-                  <MenuItem label="Alphabetically" onClick={() => setSortArg("alphAll")}/>
-                  <MenuItem label="Alphabetically After Category" onClick={() => setSortArg("alphCat")}  />
-                  <MenuItem label="Alphabetically After Commodity" onClick={() => setSortArg("alphCom")} />
-                  <MenuItem label="Stock Balance" onClick={() => setSortArg("stock")} />
-                  <MenuItem label="Clear Sorting Choice" onClick={() => setSortArg("clear")} />
-                </FlyoutMenu>}
-                name="buttonName"
-                value="buttonValue"
-              >
-                Sort
-              </DropdownButton>
-
-            </ButtonStrip>
-          <Table>
-                <TableHead>
-                    <TableRowHead>
-                        <TableCellHead>Category</TableCellHead>
-                        <TableCellHead>Commodity</TableCellHead>
-                        <TableCellHead>Stock balance</TableCellHead>
-                    </TableRowHead>
-                </TableHead>
-                <TableBody>
-                    {sortedCategories.map(category => (
-                        <React.Fragment key={category}>
-                            <TableRow>
-                                <TableCell className="category" colSpan={3}>{category}</TableCell>
-                            </TableRow>
-                            {groupedData[category].map(row => (
-                                <TableRow key={row.id}
-                                          onClick={() => handleTableRowClick(row)}
-                                >
-                                    <TableCell></TableCell>
-                                  <TableCell onClick={() => setSelectedCommodity(row)}>
-                                    {row.displayName}
-                                  </TableCell>                                    <TableCell>{row.value}</TableCell>
-                                </TableRow>
-                            ))}
-                        </React.Fragment>
-                    ))}
-                </TableBody>
-          </Table>
-            {showSlideLeftPage && selectedCommodity && (
-              <div style={{ marginLeft: '10px', width: 50, position: 'relative' }}>
-                <Table style={{ width: '100%' }}>
-                  <TableHead>
-                    <TableRowHead>
-                      <TableCellHead>Selected Commodity</TableCellHead>
-                    </TableRowHead>
-                  </TableHead>
-
-                  <TableBody>
-                    <TableRow>
-                      <TableCell></TableCell>
-                      <TableCell>{selectedCommodity.displayName}</TableCell>
-                      <TableCell>{selectedCommodity.value}</TableCell>
+                      </TableCell>
+                      <TableCell>
+                        <button className={styles.tablebtn}
+                                onClick={handleClick}>{row.displayName}
+                        </button>
+                      </TableCell>
+                      <TableCell>{row.value}</TableCell>
                     </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            )}
+                  ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
           </div>
-        );
-    }
+          {clicked && selectedCommodity && (
+            <ClinicTable/>
+          )}
+        </div>
+      </div>
+    );
+  }
 
+  return <h1>Browse</h1>;
+}

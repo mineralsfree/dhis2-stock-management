@@ -1,0 +1,43 @@
+.float-container {
+  width: 100%;
+}
+
+
+.float-child {
+  width: 50%;
+  float: left;
+}
+
+.category{
+  color: rgb(0, 0, 0);
+  background-color:#D5DDE5;
+}
+.tablebtn{
+  cursor: 'pointer';
+  background-color: transparent;
+  border: transparent;
+
+}
+
+.tablebtn:hover {
+  color: black;
+  cursor: pointer;
+
+}
+
+.tablerow{
+  background-color: transparent;
+  border: transparent;
+
+}
+
+.tablerow:hover {
+  background-color: #e3f2fd !important;
+
+}
+
+.error-message{
+  color: red;
+
+
+}
