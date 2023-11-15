@@ -7,6 +7,7 @@ import {
   composeValidators,
   createNumberRange,
   Button,
+  CircularLoader,
   Chip,
   IconAdd24,
   IconDelete24,
@@ -21,6 +22,7 @@ import {
 } from "../../utils/CommoditiesUtils";
 import { useRecipients } from "../../hooks/useRecipients";
 import { recipientsToOptions } from "../../utils/recepientsUtils";
+import {RecipientAddForm} from "../RecipentsAddForm/RecipientAddForm";
 
 // Fix these later
 const dispensedByOptions = [
@@ -39,19 +41,13 @@ const dispensedToOptions = [
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
-  const [Delete, setDelete] = useState(["1"]);
 
-  const {
-    loading: commoditiesLoading,
-    error,
-    commodities,
-    refetch,
-  } = useCommodities();
-  const { recipients, loading: recipientsLoading } = useRecipients();
+  const { loading: commoditiesLoading, error, commodities, refetch } = useCommodities();
+  const { recipients, loading: recipientsLoading, refetch: recipientsRefetch } = useRecipients();
   const recipientsOptions = recipientsToOptions(recipients);
   const [showForm, setShowForm] = useState(false);
   if (commoditiesLoading || recipientsLoading) {
-    return null;
+    return  <CircularLoader large/>
   }
   if (error) {
     return <span>ERROR: {error.message}</span>;
@@ -107,8 +103,11 @@ export default function CommodityDispenseForm({ handleRegister }) {
                 handleRegister(formInput);
               }}
             >
-              {({ values, handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
+              {({ values, handleSubmit, form }) => (
+                <form onSubmit={event =>{
+                  handleSubmit(event);
+                  form.reset();
+                }}>
                   <div className={styles.formRow}>
                     <ReactFinalForm.Field
                       className={styles.recipient_field}
@@ -236,91 +235,27 @@ export default function CommodityDispenseForm({ handleRegister }) {
           </div>
         </Card>
 
-        <div style={{ background: "none" }}>
-          <div
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
-            <Chip
-              icon={<IconAdd24 />}
-              onClick={() => {
-                setShowForm(true); // Show the form when the "Add" icon is clicked.
-              }}
-              selected
-            >
-              {"Add new recipient"}
-            </Chip>
-          </div>
-          {Delete.map((c, index) => {
-            return (
-              <div>
-                {showForm && (
-                  <ReactFinalForm.Form
-                    onSubmit={(values) => {
-                      handleRegister(values, setDelete);
-                    }}
-                  >
-                    {({ values, handleSubmit }) => (
-                      <form onSubmit={handleSubmit}>
-                        <div className={styles.formCommodityRow} key={c}>
-                          <div className={styles.formRow2}>
-                            <div className={`${styles.column}`}>
-                              {index !== "1" && (
-                                <div
-                                  className={styles.formItemRemove}
-                                  onClick={() => {
-                                    setDelete((curr) =>
-                                      curr.filter((cc) => cc !== c)
-                                    );
-                                    // reset the values
-                                    values[`Name${index}`] = undefined;
-                                    values[`Department[${index}]`] = undefined;
-                                  }}
-                                  style={{
-                                    marginLeft: "200px",
-                                    textalign: "end",
 
-                                    cursor: "pointer",
-                                    color: "red",
-                                  }}
-                                >
-                                  X
-                                </div>
-                              )}
-                              <div className={`${styles.column}`}>
-                                <ReactFinalForm.Field
-                                  name={`Name[${index}]`}
-                                  label="Name"
-                                  component={InputFieldFF} // Change the component to InputFieldFF
-                                  type="text"
-                                  validate={hasValue}
-                                  required
-                                />
-                              </div>
-                              <div className={styles.column}>
-                                <ReactFinalForm.Field
-                                  name={`Department[${index}]`}
-                                  label="Department"
-                                  component={InputFieldFF}
-                                  required
-                                />
-                              </div>
-                            </div>
-                            <div className={styles.column}>
-                              <Button type="submit" primary>
-                                Register
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    )}
-                  </ReactFinalForm.Form>
-                )}
-              </div>
-            );
-          })}
+
+      <div style={{ background: "none"}}>
+        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+            {!showForm && (<Chip
+                icon={<IconAdd24 />}
+                onClick={() => {
+                    setShowForm(true); // Show the form when the "Add" icon is clicked.
+                }}
+                selected
+            >
+                {"Add new recipient"}
+            </Chip>)}
         </div>
-      </div>
-    </div>
+        <div>
+        {showForm && <RecipientAddForm recipientsRefetch={recipientsRefetch} recipients={recipients} close={()=>setShowForm(false)}/>}
+        </div>
+     </div>
+
+  </div>
+</div>
+    
   );
 }

@@ -49,11 +49,17 @@
     background-color: white;
 
 }
-
+.formRecipient{
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
 .formItemRemove {
-    margin-left: 1rem;
+    margin-left: 200px;
+    text-align: end;
+    width: 25px;
     cursor: pointer;
-    align-items: end;
 }
 .amount-input {
     display: none; /* Initially hide the input fields */
