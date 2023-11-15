@@ -12,6 +12,7 @@ import {
   TableRowHead,
   Card,
 } from "@dhis2/ui";
+import { formatDatetime } from "./utils/formatting";
 import { useCommodities } from "./hooks/useCommodities";
 import { useDispenseHistory } from "./hooks/useDispenseHistory";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
@@ -164,16 +165,7 @@ function DispenseHistoryTable({ useDispenseHistory }) {
                   <TableCell>{row.quantityDispensed}</TableCell>
                   <TableCell>{row.dispensedBy}</TableCell>
                   <TableCell>{row.dispensedTo}</TableCell>
-                  <TableCell>
-                    {new Date(row.dateDispensed).toLocaleString("no-NB", {
-                      timeZone: "CET",
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </TableCell>
+                  <TableCell>{formatDatetime(row.dateDispensed)}</TableCell>
                 </TableRow>
               );
             })}
