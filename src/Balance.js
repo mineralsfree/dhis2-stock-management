@@ -12,7 +12,13 @@ import {
   TableHead,
   TableRow,
   TableRowHead,
+  DropdownButton,
+  InputField,
+  ButtonStrip,
+  FlyoutMenu,
+  MenuItem,
 } from "@dhis2/ui";
+
 
 const dataQuery = {
     dataSets: {
@@ -54,7 +60,7 @@ const dataQuery = {
       orgUnit: "ImspTQPwCqd",
     },
   },
-};
+}; 
 
 const mergeData = (data) => {
   return data.commoditiesSet.dataSetElements.map((d) => {
@@ -76,6 +82,8 @@ const mergeData = (data) => {
 };
 
 export function Balance() {
+    const [searchWord, setSearchWord] = useState("");
+    const [sortArg, setSortArg] = useState("");
     const { loading, error, data } = useDataQuery(dataQuery);
 
     if (error) {
@@ -86,51 +94,100 @@ export function Balance() {
         return <CircularLoader large />;
     }
 
-    if (data) {
-        const groupedData = data.commoditiesSet.dataSetElements.reduce((acc, d) => {
-            const displayName = d.dataElement.name.replace(/Commodities( - )?/, '');
-            const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === "rQLFnNXXIL0") ;
-            const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '');
-
-            
-
-            if (!acc[category]) {
-                acc[category] = [];
-            }
-
-            acc[category].push({ displayName, value: matchedValue.value, id: d.dataElement.id });
-
-            return acc;
-        }, {});
-
-        return (
-            <Table>
-                <TableHead>
-                    <TableRowHead>
-                        <TableCellHead>Category</TableCellHead>
-                        <TableCellHead>Commodity</TableCellHead>
-                        <TableCellHead>Stock balance</TableCellHead>
-                    </TableRowHead>
-                </TableHead>
-                <TableBody>
-                    {Object.keys(groupedData).map(category => (
-                        <React.Fragment key={category}>
-                            <TableRow>
-                                <TableCell className="category" colSpan={3}>{category}</TableCell>
-                            </TableRow>
-                            {groupedData[category].map(row => (
-                                <TableRow key={row.id}>
-                                    <TableCell></TableCell>
-                                    <TableCell>{row.displayName}</TableCell>
-                                    <TableCell>{row.value}</TableCell>
-                                </TableRow>
-                            ))}
-                        </React.Fragment>
-                    ))}
-                </TableBody>
-            </Table>
-        );
+    if (!data) {
+        return <h1>Browse</h1>;
     }
 
-    return <h1>Browse</h1>;
+    const groupedData = data.commoditiesSet.dataSetElements.reduce((acc, d) => {
+        const displayName = d.dataElement.name.replace(/Commodities( - )?/, '');
+        const matchedValue = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === "rQLFnNXXIL0") ;
+        const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '');
+
+        if(!displayName.toLowerCase().includes(searchWord)){
+            return acc;
+        }
+
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+
+        acc[category].push({ displayName, value: matchedValue.value, id: d.dataElement.id });
+
+        return acc;
+    }, {});
+
+    let sortedCategories = Object.keys(groupedData)
+
+    if (sortArg == "alphCat" || sortArg == "alphAll"){
+        sortedCategories = Object.keys(groupedData).sort();
+    }
+
+    if(sortArg == "alphCom" || sortArg == "alphAll"){
+        Object.keys(groupedData).map((category) => {
+            groupedData[category].sort((el1, el2) => el1.displayName.localeCompare(el2.displayName));
+        })
+    }
+
+    if(sortArg == "stock"){
+        Object.keys(groupedData).map((category) => {
+            groupedData[category].sort((el1, el2) => el1.value - el2.value);
+        })
+    }
+    
+   
+
+    return (
+        <div>
+            <ButtonStrip class="button-container">
+                
+                <InputField
+                    name="defaultName"
+                    onChange={(word) => {setSearchWord(word.value)}}
+                    placeholder="Search"
+                    inputWidth="220px"
+                    value={searchWord}
+                />
+                <DropdownButton
+                     component={<FlyoutMenu>
+                                <MenuItem label="Alphabetically" onClick={() => setSortArg("alphAll")}/>
+                                <MenuItem label="Alphabetically After Category" onClick={() => setSortArg("alphCat")}  />
+                                <MenuItem label="Alphabetically After Commodity" onClick={() => setSortArg("alphCom")} />
+                                <MenuItem label="Stock Balance" onClick={() => setSortArg("stock")} />
+                                <MenuItem label="Clear Sorting Choice" onClick={() => setSortArg("clear")} />
+                            </FlyoutMenu>}
+                    name="buttonName"
+                    value="buttonValue"
+                >
+                            Sort
+                </DropdownButton>
+
+            </ButtonStrip>
+        <Table>
+            <TableHead>
+                <TableRowHead>
+                    <TableCellHead>Category</TableCellHead>
+                    <TableCellHead>Commodity</TableCellHead>
+                    <TableCellHead>Stock balance</TableCellHead>
+                </TableRowHead>
+            </TableHead>
+            <TableBody>
+                {sortedCategories.map(category => (
+                    <React.Fragment key={category}>
+                        <TableRow>
+                            <TableCell className="category" colSpan={3}>{category}</TableCell>
+                        </TableRow>
+                        {groupedData[category].map(row => (
+                            <TableRow key={row.id}>
+                                <TableCell></TableCell>
+                                <TableCell>{row.displayName}</TableCell>
+                                <TableCell>{row.value}</TableCell>
+                            </TableRow>
+                        ))}
+                    </React.Fragment>
+                ))}
+            </TableBody>
+        </Table>
+        </div>
+    );
 }
+

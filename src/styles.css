@@ -50,3 +50,13 @@
     color: rgb(0, 0, 0);
     background-color:rgb(230, 227, 227)
 }
+
+
+.button-container{
+    border: '1px solid #c4c9cc';
+    padding: 8;
+    width: '100%';
+
+}
+
+
