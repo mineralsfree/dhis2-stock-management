@@ -41,14 +41,13 @@
     width: 200px;
 }
 .recipient_field{
-    width: 100%;
+    width: 200px;
 }
 .formCommodityRow {
     display: flex;
-    justify-content: center;
     background-color: white;
-
 }
+
 .formRecipient{
     padding: 1em;
     display: flex;
@@ -56,19 +55,34 @@
     background-color: white;
 }
 .formItemRemove {
-    margin-left: 200px;
-    text-align: end;
-    width: 25px;
     cursor: pointer;
+    margin: 28px 0 0 10px;
+    display: block;
 }
 .amount-input {
     display: none; /* Initially hide the input fields */
-  }
+}
+
 .show-amount-input .amount-input {
     display: block; /* Show the input fields when this class is applied */
-  }
-  .hidden {
-    display: none;
-  }
+}
 
- 
+.hidden {
+    display: none;
+}
+
+.addRecipientForm {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+}
+
+.addRecipientFields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.addRecipientField {
+    width: 240px;
+}

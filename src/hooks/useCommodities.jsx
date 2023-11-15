@@ -41,7 +41,7 @@ const mergeData = (data) => {
             id: d.dataElement.id,
             endBalance: endBalance,
             consumption: consumption,
-            inStock: inStock,
+            inStock: endBalance, // remove
             category: category,
         };
         retObj[category] = retObj[category] ? [...retObj[category], element] : [element];
