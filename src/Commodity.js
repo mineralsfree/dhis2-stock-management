@@ -12,50 +12,8 @@ import {
   TableRowHead,
 } from "@dhis2/ui";
 import { useCommodities } from "./hooks/useCommodities";
+import { useDispenseHistory } from "./hooks/useDispenseHistory";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
-
-const dataQuery = {
-  dataSets: {
-    resource: "dataSets/aLpVgfXiz0f",
-    params: {
-      fields: [
-        "name",
-        "id",
-        "*",
-        "dataSetElements[dataElement[id, displayName]",
-        // 'dataSetElements[dataElement[*]'
-      ],
-    },
-  },
-  commoditiesSet: {
-    resource: "dataSets/ULowA8V3ucd",
-    params: {
-      fields: [
-        "*",
-        "name",
-        "id",
-        // 'dataSetElements[dataElement[id, displayName]',
-        "dataSetElements[dataElement[name,displayName, id,dataElementGroups[name], categoryCombo[name,id,categoryOptionCombos[name,id, *]]]",
-      ],
-    },
-  },
-  dataValueSets: {
-    resource: "dataValueSets",
-    params: {
-      orgUnit: "ImspTQPwCqd",
-      dataSet: "aLpVgfXiz0f",
-      period: "2020",
-    },
-  },
-  commoditiesValue: {
-    resource: "dataValueSets",
-    params: {
-      dataSet: "ULowA8V3ucd",
-      period: "202310",
-      orgUnit: "ImspTQPwCqd",
-    },
-  },
-};
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -75,40 +33,71 @@ const dataMutationQuery = {
   }),
 };
 
+const dispenseHistoryMutationQuery = {
+  resource: "dataStore/mikimami/dispenseHistory",
+  type: "update",
+  data: ({ dispenseHistory }) => ({
+    dispenseHistory: dispenseHistory,
+  }),
+};
+
 export function Commodity() {
-  const [mutate, { loading, error }] = useDataMutation(dataMutationQuery);
+  const [mutateCommodities, { loadingCommodities, errorCommodities }] =
+    useDataMutation(dataMutationQuery);
+  const [mutateHistory, { loadingHistory, errorHistory }] = useDataMutation(
+    dispenseHistoryMutationQuery
+  );
+
+  const useHistory = useDispenseHistory();
 
   const handleSubmit = (formInput) => {
-    console.log("Submitted2");
-    const storedBy = formInput.dispensedBy;
-    const orgUnit = formInput.dispensedTo;
+    console.log("formInput", formInput.dataValues);
 
-    mutate({
-      completeDate: formInput.dateDispensed,
-      dataValues: formInput.dataValues,
-      //   storedBy: "SOMETHINGWORKS",
-    })
+    const promises = [
+      mutateCommodities({
+        completeDate: formInput.dateDispensed,
+        dataValues: formInput.dataValues,
+      }),
+      mutateHistory({
+        dispenseHistory: [
+          ...(useHistory?.dispenseHistory || []),
+          ...formInput.dataValues.map((dataValue) => {
+            const completeDate = `${formInput.dateDispensed}T${formInput.timeDispensed}:00.000`;
+            return {
+              dataElement: dataValue.dataElement,
+              quantityDispensed: dataValue.valueRaw,
+              displayName: dataValue.displayName,
+              dispensedBy: formInput.dispensedBy,
+              dispensedTo: formInput.dispensedTo,
+              dateDispensed: completeDate,
+            };
+          }),
+        ],
+      }),
+    ];
+
+    Promise.all(promises)
       .then((res) => {
-        console.log(res);
-        alert("Data successfully submitted. TODO: Empty form.");
+        // success, refetch dispense history
+        useHistory.refetch();
+        // TODO: notify user of success with toast
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        // TODO: notify user of error with toast
+      });
   };
 
   return (
     <div>
       <CommodityDispenseForm handleRegister={handleSubmit} />
-      <CommodityTable />
+      <DispenseHistoryTable useDispenseHistory={useHistory} />
     </div>
   );
 }
 
-function CommodityTable() {
-  //   const { loading, error, data } = useDataQuery(dataQuery);
-  const { loading, error, commodities, refetch } = useCommodities();
-  const handleInputChange = (event) => {
-    console.log(event.target.value);
-  };
+function DispenseHistoryTable({ useDispenseHistory }) {
+  const { loading, error, dispenseHistory, refetch } = useDispenseHistory;
 
   if (error) {
     return <span>ERROR: {error.message}</span>;
@@ -118,46 +107,37 @@ function CommodityTable() {
     return <CircularLoader large />;
   }
 
-  if (!commodities) {
+  if (!dispenseHistory) {
     return null;
   }
 
-  const tabledata = [];
-  Object.values(commodities).forEach((category) => {
-    category.forEach((commodity) => {
-      tabledata.push({
-        label: commodity.displayName,
-        value: commodity.id,
-        inStock: commodity.inStock,
-        consumption: commodity.consumption,
-        endBalance: commodity.endBalance,
-        category: commodity.category,
-      });
-    });
+  // sort dipenseHistory by date
+  const dispenseHistorySorted = dispenseHistory.sort((a, b) => {
+    return new Date(b.dateDispensed) - new Date(a.dateDispensed);
   });
 
   return (
     <>
-      <h2>Table of Registered Commodities</h2>
+      <h2>Commodity dispense history</h2>
       <Table>
         <TableHead>
           <TableRowHead>
             <TableCellHead>Commodity</TableCellHead>
-            <TableCellHead>End balance</TableCellHead>
-            <TableCellHead>Consumption</TableCellHead>
-            <TableCellHead>Current stock</TableCellHead>
-            <TableCellHead>Category</TableCellHead>
+            <TableCellHead>Quantity dispensed</TableCellHead>
+            <TableCellHead>Dispensed by</TableCellHead>
+            <TableCellHead>Dispensed to</TableCellHead>
+            <TableCellHead>Date</TableCellHead>
           </TableRowHead>
         </TableHead>
         <TableBody>
-          {tabledata.map((row) => {
+          {dispenseHistorySorted.map((row, i) => {
             return (
-              <TableRow key={row.id}>
-                <TableCell>{row.label}</TableCell>
-                <TableCell>{row.endBalance}</TableCell>
-                <TableCell>{row.consumption}</TableCell>
-                <TableCell>{row.inStock}</TableCell>
-                <TableCell>{row.category}</TableCell>
+              <TableRow key={i}>
+                <TableCell>{row.displayName}</TableCell>
+                <TableCell>{row.quantityDispensed}</TableCell>
+                <TableCell>{row.dispensedBy}</TableCell>
+                <TableCell>{row.dispensedTo}</TableCell>
+                <TableCell>{row.dateDispensed}</TableCell>
               </TableRow>
             );
           })}

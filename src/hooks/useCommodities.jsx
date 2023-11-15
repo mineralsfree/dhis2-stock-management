@@ -25,14 +25,12 @@ const dataQuery = {
 }
 const mergeData = (data) => {
     const retObj = {};
-    console.log("oooo");
-    console.log(data);
     data.commoditiesSet.dataSetElements.forEach(d => {
         const displayName = d.dataElement.displayName.replace(/Commodities( - )?/, '').trim();
         let endBalance = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === END_BALANCE_ID)?.value;
         endBalance = endBalance ? parseInt(endBalance) : 0;
         let consumption = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === CONSUMPTION_ID)?.value;
-        console.log("consumption", displayName, consumption);
+        // console.log("consumption", displayName, consumption);
         consumption = consumption ? parseInt(consumption) : 0;
         // const category = d.dataElement.dataElementGroups[0].name.replace(/Commodities( - )?/, '').trim();
         const inStock = endBalance ? parseInt(endBalance) - (consumption ? parseInt(consumption) : 0) : 0;
@@ -71,6 +69,7 @@ export const useCommodities = () => {
     if (data && !commodities && !refetchLoading) {
         setCommodities(mergeData(data));
     }
+    console.log('useCommodities', commodities);
     return {loading: loading || refetchLoading, error, commodities, refetch};
 
 }

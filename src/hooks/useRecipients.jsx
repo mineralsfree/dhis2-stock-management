@@ -16,7 +16,7 @@ export const useRecipients = ()=>{
         setRecipients(null);
     }
     if (data && !recipients){
-        console.log('data',data);
+        console.log('recipients', data);
         setRecipients(Object.values(data.recipients.recipients));
     }
     return {loading, error, recipients, refetch};
