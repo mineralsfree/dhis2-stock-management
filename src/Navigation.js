@@ -5,22 +5,18 @@ export function Navigation(props) {
   return (
     <Menu>
       <MenuItem
-        label="Balance"
+        label="Stock Balance"
         active={props.activePage === "Balance"}
         onClick={() => props.activePageHandler("Balance")}
       />
+     
       <MenuItem
-        label="Insert"
-        active={props.activePage === "Insert"}
-        onClick={() => props.activePageHandler("Insert")}
-      />
-      <MenuItem
-            label="Commodity dispensing"
+            label="Dispensing Commodity"
             active={props.activePage === "Commodity"}
             onClick={() => props.activePageHandler("Commodity")}
         />
         <MenuItem
-            label="Delivery"
+            label="Register Delivery"
             active={props.activePage === "Delivery"}
             onClick={() => props.activePageHandler("Delivery")}
         />
