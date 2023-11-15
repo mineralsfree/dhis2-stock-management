@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
   TableRowHead,
+  Card,
 } from "@dhis2/ui";
 import { useCommodities } from "./hooks/useCommodities";
 import { useDispenseHistory } from "./hooks/useDispenseHistory";
@@ -89,7 +90,14 @@ export function Commodity() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        marginBottom: "15px",
+      }}
+    >
       <CommodityDispenseForm handleRegister={handleSubmit} />
       <DispenseHistoryTable useDispenseHistory={useHistory} />
     </div>
@@ -117,32 +125,34 @@ function DispenseHistoryTable({ useDispenseHistory }) {
   });
 
   return (
-    <>
-      <h2>Commodity dispense history</h2>
-      <Table>
-        <TableHead>
-          <TableRowHead>
-            <TableCellHead>Commodity</TableCellHead>
-            <TableCellHead>Quantity dispensed</TableCellHead>
-            <TableCellHead>Dispensed by</TableCellHead>
-            <TableCellHead>Dispensed to</TableCellHead>
-            <TableCellHead>Date</TableCellHead>
-          </TableRowHead>
-        </TableHead>
-        <TableBody>
-          {dispenseHistorySorted.map((row, i) => {
-            return (
-              <TableRow key={i}>
-                <TableCell>{row.displayName}</TableCell>
-                <TableCell>{row.quantityDispensed}</TableCell>
-                <TableCell>{row.dispensedBy}</TableCell>
-                <TableCell>{row.dispensedTo}</TableCell>
-                <TableCell>{row.dateDispensed}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
+    <Card>
+      <div style={{ padding: "24px" }}>
+        <h3>Commodity dispense history</h3>
+        <Table>
+          <TableHead>
+            <TableRowHead>
+              <TableCellHead>Commodity</TableCellHead>
+              <TableCellHead>Quantity dispensed</TableCellHead>
+              <TableCellHead>Dispensed by</TableCellHead>
+              <TableCellHead>Dispensed to</TableCellHead>
+              <TableCellHead>Date</TableCellHead>
+            </TableRowHead>
+          </TableHead>
+          <TableBody>
+            {dispenseHistorySorted.map((row, i) => {
+              return (
+                <TableRow key={i}>
+                  <TableCell>{row.displayName}</TableCell>
+                  <TableCell>{row.quantityDispensed}</TableCell>
+                  <TableCell>{row.dispensedBy}</TableCell>
+                  <TableCell>{row.dispensedTo}</TableCell>
+                  <TableCell>{row.dateDispensed}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </Card>
   );
 }
