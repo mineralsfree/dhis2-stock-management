@@ -68,7 +68,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
 
   const commodityOptions = commoditiesToOptions(commodities);
 
-  const stockBalance = (id) => stockBalanceById(commodityOptions, id);
+  const getCurrentEndBalance = (id) => stockBalanceById(commodityOptions, id);
   const currentConsumption = (id) =>
     parseInt(commodityOptions.find((com) => com.value === id).consumption);
   const getDisplayName = (id) => {
@@ -94,21 +94,29 @@ export default function CommodityDispenseForm({ handleRegister }) {
             <h3>Register commodity dispense</h3>
             <ReactFinalForm.Form
               onSubmit={(values) => {
+                const data = commodityBulk.map((c) => ({
+                  dataElement: values[`commodity_${c}`],
+                  amount: parseInt(values[`amount_${c}`]),
+                  currentConsumption: currentConsumption(
+                    values[`commodity_${c}`]
+                  ),
+                  currentEndBalance: getCurrentEndBalance(
+                    values[`commodity_${c}`]
+                  ),
+                  displayName: getDisplayName(values[`commodity_${c}`]),
+                }));
+
                 const formInput = {
                   dispensedBy: values["dispensedBy"],
                   dispensedTo: values["dispensedTo"],
                   dateDispensed: values["dateDispensed"],
                   timeDispensed: values["timeDispensed"],
-                  dataValues: commodityBulk.map((c) => ({
-                    dataElement: values[`commodity_${c}`],
-                    value:
-                      parseInt(values[`amount_${c}`]) +
-                      currentConsumption(values[`commodity_${c}`]),
-                    valueRaw: values[`amount_${c}`],
-                    displayName: getDisplayName(values[`commodity_${c}`]),
-                  })),
+                  data: data,
                 };
-                handleRegister(formInput);
+                handleRegister(formInput).then(() => {
+                  // refetch commodities when done
+                  refetch();
+                });
               }}
             >
               {({ values, handleSubmit, form }) => (
@@ -116,6 +124,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                   onSubmit={(event) => {
                     handleSubmit(event);
                     form.reset();
+                    setCommodityBulk(["1"]);
                   }}
                 >
                   <div className={styles.formRow}>
@@ -146,11 +155,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                           <ReactFinalForm.Field
                             className={styles.field}
                             name={`commodity_${c}`}
-                            // value={value}
                             label="Commodity"
                             helpText={`In stock: ${
                               values[`commodity_${c}`]
-                                ? stockBalance(values[`commodity_${c}`])
+                                ? getCurrentEndBalance(values[`commodity_${c}`])
                                 : ""
                             }`}
                             component={SingleSelectFieldFF}
@@ -169,7 +177,9 @@ export default function CommodityDispenseForm({ handleRegister }) {
                               createNumberRange(
                                 1,
                                 values[`commodity_${c}`]
-                                  ? stockBalance(values[`commodity_${c}`])
+                                  ? getCurrentEndBalance(
+                                      values[`commodity_${c}`]
+                                    )
                                   : Infinity
                               )
                             )}

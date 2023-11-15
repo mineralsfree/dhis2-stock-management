@@ -27,10 +27,8 @@ const dataMutationQuery = {
     orgUnit: "ImspTQPwCqd",
     dataValues: dataValues.map((dataValue) => ({
       dataElement: dataValue.dataElement,
-      categoryOptionCombo: "J2Qf1jtZuj8", // consumption
+      categoryOptionCombo: dataValue.categoryOptionCombo, // consumption
       value: dataValue.value,
-      storedBy: "johnabel", // can be ignored?
-      comment: "test2",
     })),
   }),
 };
@@ -44,31 +42,45 @@ const dispenseHistoryMutationQuery = {
 };
 
 export function Commodity() {
-  const [mutateCommodities, { loadingCommodities, errorCommodities }] =
-    useDataMutation(dataMutationQuery);
-  const [mutateHistory, { loadingHistory, errorHistory }] = useDataMutation(
-    dispenseHistoryMutationQuery
-  );
+  const [mutateCommodities] = useDataMutation(dataMutationQuery);
+  const [mutateHistory] = useDataMutation(dispenseHistoryMutationQuery);
 
   const useHistory = useDispenseHistory();
 
-  const handleSubmit = (formInput) => {
-    console.log("formInput", formInput.dataValues);
+  const handleSubmit = async (formInput) => {
+    console.log("formInput", formInput.data);
+
+    const dataValues = [];
+    formInput.data.forEach((item) => {
+      // update consumption
+      dataValues.push({
+        dataElement: item.dataElement,
+        value: item.currentConsumption + item.amount,
+        categoryOptionCombo: "J2Qf1jtZuj8", // consumption
+      });
+
+      // update end balance
+      dataValues.push({
+        dataElement: item.dataElement,
+        value: item.currentEndBalance - item.amount,
+        categoryOptionCombo: "rQLFnNXXIL0", // endBalance
+      });
+    });
 
     const promises = [
       mutateCommodities({
         completeDate: formInput.dateDispensed,
-        dataValues: formInput.dataValues,
+        dataValues: dataValues,
       }),
       mutateHistory({
         dispenseHistory: [
           ...(useHistory?.dispenseHistory || []),
-          ...formInput.dataValues.map((dataValue) => {
+          ...formInput.data.map((item) => {
             const completeDate = `${formInput.dateDispensed}T${formInput.timeDispensed}:00.000`;
             return {
-              dataElement: dataValue.dataElement,
-              quantityDispensed: dataValue.valueRaw,
-              displayName: dataValue.displayName,
+              dataElement: item.dataElement,
+              quantityDispensed: item.amount.toString(),
+              displayName: item.displayName,
               dispensedBy: formInput.dispensedBy,
               dispensedTo: formInput.dispensedTo,
               dateDispensed: completeDate,
@@ -78,7 +90,7 @@ export function Commodity() {
       }),
     ];
 
-    Promise.all(promises)
+    await Promise.all(promises)
       .then((res) => {
         // success, refetch dispense history
         useHistory.refetch();
