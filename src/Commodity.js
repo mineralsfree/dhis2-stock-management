@@ -15,6 +15,7 @@ import {
 import { useCommodities } from "./hooks/useCommodities";
 import { useDispenseHistory } from "./hooks/useDispenseHistory";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
+import toast, { Toaster } from "react-hot-toast";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -81,11 +82,15 @@ export function Commodity() {
       .then((res) => {
         // success, refetch dispense history
         useHistory.refetch();
-        // TODO: notify user of success with toast
+        toast.success("Successfully registered commodity dispense", {
+          duration: 4000,
+        });
       })
       .catch((error) => {
         console.log(error);
-        // TODO: notify user of error with toast
+        toast.error("Error registering commodity dispense", {
+          duration: 4000,
+        });
       });
   };
 
@@ -98,6 +103,7 @@ export function Commodity() {
         marginBottom: "15px",
       }}
     >
+      <Toaster />
       <CommodityDispenseForm handleRegister={handleSubmit} />
       <DispenseHistoryTable useDispenseHistory={useHistory} />
     </div>
@@ -146,7 +152,16 @@ function DispenseHistoryTable({ useDispenseHistory }) {
                   <TableCell>{row.quantityDispensed}</TableCell>
                   <TableCell>{row.dispensedBy}</TableCell>
                   <TableCell>{row.dispensedTo}</TableCell>
-                  <TableCell>{row.dateDispensed}</TableCell>
+                  <TableCell>
+                    {new Date(row.dateDispensed).toLocaleString("no-NB", {
+                      timeZone: "CET",
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </TableCell>
                 </TableRow>
               );
             })}
