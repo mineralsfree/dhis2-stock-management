@@ -10,9 +10,17 @@ import {
   TableHead,
   TableRow,
   TableRowHead,
+  Button,
 } from "@dhis2/ui";
 import {useNearbyClinics} from "./hooks/useNearbyClinics";
+import * as PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
+function Input(props) {
+  return null;
+}
+
+Input.propTypes = {name: PropTypes.string};
 const ClinicTable = (props) => {
   const {selectedCommodity} = props
   const [requestError, setRequestError] = useState(false);
@@ -20,35 +28,31 @@ const ClinicTable = (props) => {
   if (!nearbyClinics) {
     return <CircularLoader/>
   }
-  console.log(nearbyClinics);
-  console.log(selectedCommodity);
 
   const selectedClinics = nearbyClinics.filter(clinics => clinics.displayName === selectedCommodity);
-  console.log(selectedClinics);
-
   return (
     <div style={{flex: 1, marginLeft: "5px"}}>
-      <h3> {/*{selectedCommodity.displayName}  */}request from nearby clinics</h3>
+      <h3> {selectedCommodity} request from nearby clinics</h3>
       <Table>
         <TableHead>
           <TableRowHead className={styles.category}>
-            <TableCellHead>Distance</TableCellHead>
+            {/*<TableCellHead>OrganisationUnit id</TableCellHead>*/}
             <TableCellHead>Clinic</TableCellHead>
             <TableCellHead>Stock balance</TableCellHead>
-            <TableCellHead>Commodity</TableCellHead>
+            <TableCellHead>Request</TableCellHead>
           </TableRowHead>
         </TableHead>
         <TableBody>
           {selectedClinics.map(clincs => {
             return (<TableRow key={clincs.orgUnitName}>
-              <TableCell>{clincs.orgUnit}</TableCell>
+              {/*<TableCell>{clincs.orgUnit}</TableCell>*/}
               <TableCell>{clincs.orgUnitName}</TableCell>
               <TableCell>{clincs.endBalance}</TableCell>
               <TableCell>
-                <input type="number" id="tentacles" name="tentacles" min="10" max="100"/>
-                <button className="btn btn-primary" type="button">
+                <Input type='number' name="req" />
+                <Button primary onClick={()=>toast.success(`Requested ${selectedCommodity} from ${clincs.orgUnitName}`)}>
                   Request
-                </button>
+                </Button>
               </TableCell>
             </TableRow>)
           })}

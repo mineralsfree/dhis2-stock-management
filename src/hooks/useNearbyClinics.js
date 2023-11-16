@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {useDataQuery} from "@dhis2/app-runtime";
-import {CONSUMPTION_ID, END_BALANCE_ID, getNearbyClinics, nearByClinics} from "../consts";
-
+import {CONSUMPTION_ID, END_BALANCE_ID, getNearbyClinics, nearByClinics, ORG_UNIT} from "../consts";
 
 
 const dataQuery = {
@@ -47,17 +46,19 @@ const mergeData = (data) => {
     // const inStock = endBalance ? parseInt(endBalance) - (consumption ? parseInt(consumption) : 0) : 0;
     // get longer group (category) and remove "Comodity" prefix
     // const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '').trim();
-    endBalances.forEach(endBalance => {
-      const element = {
-        displayName: displayName,
-        id: d.dataElement.id,
-        endBalance: endBalance.value,
-        orgUnitName: data.orgUnit.children.find(child =>child.id === endBalance.orgUnit)?.name || endBalance.orgUnit,
-        orgUnit: endBalance.orgUnit,
-        inStock: endBalance, // remove
-      };
-      retObj.push(element);
-    })
+    endBalances
+      .filter(endBalance => endBalance.orgUnit !== ORG_UNIT)
+      .forEach(endBalance => {
+        const element = {
+          displayName: displayName,
+          id: d.dataElement.id,
+          endBalance: endBalance.value,
+          orgUnitName: data.orgUnit.children.find(child => child.id === endBalance.orgUnit)?.name || endBalance.orgUnit,
+          orgUnit: endBalance.orgUnit,
+          inStock: endBalance, // remove
+        };
+        retObj.push(element);
+      })
 
     //
     // retObj[category] = retObj[category] ? [...retObj[category], element] : [element];

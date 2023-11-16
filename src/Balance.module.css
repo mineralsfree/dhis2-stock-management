@@ -32,12 +32,19 @@
 }
 
 .tablerow:hover {
-  background-color: #e3f2fd !important;
-
+  background-color: #e3f2fd  !important;
+  cursor: pointer;
+}
+.tablerow_active{
+  background-color: #e3f2fd  !important;
 }
 
 .error-message{
   color: red;
 
 
+}
+.buttonContainer{
+  width: 100%;
+  margin-bottom: 8px;
 }
