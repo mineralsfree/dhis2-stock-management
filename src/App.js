@@ -9,6 +9,7 @@ import  { Toaster } from 'react-hot-toast';
 import {Navigation} from "./Navigation";
 import {useDataQuery} from "@dhis2/app-runtime";
 import {CommodityDeliveryRegistrationPage} from "./components/Delivery/CommodityDeliveryRegistrationPage";
+import {useNearbyClinics} from "./hooks/useNearbyClinics";
 
 const query = {
     me: {
@@ -17,7 +18,7 @@ const query = {
             fields: [
                 'id',
                 'name',
-                'organisationUnits'
+                'organisationUnits[*]'
             ],
         },
     }
