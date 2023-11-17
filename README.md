@@ -102,29 +102,35 @@ The application consist of three main pages:
 ## Screenshots of the Appllication
 
 ### 1. Stock Balance
-<img width="1422" alt="Skjermbilde 2023-11-17 kl  21 26 33" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/bac4bd8d-a5a6-4ea7-92a3-445933f2e0e5">
+<img width="1434" alt="Skjermbilde 2023-11-17 kl  23 03 55" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/e206f515-d035-4047-a76a-635fbe23c40a">
 
-<img width="1431" alt="Skjermbilde 2023-11-17 kl  21 26 48" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/5bf3ea0b-fe4b-41be-ad59-ad5079c0b8e8">
+<img width="1437" alt="Skjermbilde 2023-11-17 kl  23 04 10" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/b5283462-ac31-4757-826f-b1af026997e2">
+
+<img width="1433" alt="Skjermbilde 2023-11-17 kl  23 04 30" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/d4988efa-25c8-4868-a0e8-92810419e304">
+
 
 
 ### 2. Dispens Commodity
-<img width="1432" alt="Skjermbilde 2023-11-17 kl  21 27 43" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/ad705e0f-6de6-471d-b5fd-15a11d435170">
+<img width="1437" alt="Skjermbilde 2023-11-17 kl  23 05 18" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/12fab02c-786c-42c3-ab88-aa53f85adee3">
 
-<img width="1426" alt="Skjermbilde 2023-11-17 kl  21 27 59" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/f0c5071e-e60e-4e24-8ee1-9e25aa6b829e">
+
+<img width="1438" alt="Skjermbilde 2023-11-17 kl  23 04 47" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/4517ca24-187a-4d2b-bb1b-31636c845217">
+
+<img width="1430" alt="Skjermbilde 2023-11-17 kl  23 05 00" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/a0b3ce5a-91d4-4de1-8e4a-1edd8fcd9866">
 
 
 ### 3. Register Delivery
-<img width="1427" alt="Skjermbilde 2023-11-17 kl  21 28 32" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/42a59a38-6155-44ce-9397-6103fc047346">
+
+<img width="1434" alt="Skjermbilde 2023-11-17 kl  23 05 42" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/296d2965-02ee-491c-8a94-c57317f99b41">
+
+<img width="1436" alt="Skjermbilde 2023-11-17 kl  23 05 57" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/4b477f4c-2c8b-42bf-8f11-971e51c91e41">
+
+<img width="1437" alt="Skjermbilde 2023-11-17 kl  23 06 12" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/3fce4e9d-cfc4-4ce2-8d76-4fdaca8c7043">
+
+<img width="1437" alt="Skjermbilde 2023-11-17 kl  23 06 28" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/14a656b6-367f-4e36-b274-899c4bb4ec37">
 
 
-<img width="1440" alt="Skjermbilde 2023-11-17 kl  21 28 44" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/afd9ae6c-9d67-42ad-a6f6-38b1e643e434">
-
-
-<img width="1429" alt="Skjermbilde 2023-11-17 kl  21 29 00" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/cfeef7be-4f74-433e-9986-e4893aaf4fec">
-
-<img width="1427" alt="Skjermbilde 2023-11-17 kl  21 29 23" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/9668f683-3abf-40b4-b74e-d1f67a7b2e2c">
-
-
+<img width="1438" alt="Skjermbilde 2023-11-17 kl  23 06 42" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/4ac13bb1-2262-4504-96d3-c3c6e6ccc96d">
 
 
 
