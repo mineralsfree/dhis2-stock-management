@@ -72,7 +72,32 @@ The application consist of three main pages:
       - Click "Register" to add the new recipient, and confirm the toast notification.
       - The new recipient is now listed for future dispensing entries.
 
-**3. Delivery:**
+**3. Register Delivery:**
+- **Description:** The Delivery page enables flexible registration of bulk or individual deliveries, featuring a default bulk form switchable via the top menu. Users can specify recipients, enter quantities, set delivery times, and view detailed history.
+
+- **Features:**
+  - Users have the flexibility to register deliveries either in bulk or individually, using the page's dedicated form.
+  - The default view is the bulk registration form, which can be changed by selecting the option in the top menu.
+  - Clicking "Register Arrival" adds the delivery details to the "Delivery Arrival History" table.
+  - Users can view detailed information in the "Delivery Arrival History" table by clicking on the "View Details" button.
+  - Users can set the time of delivery, ensuring accurate tracking of arrival details.
+
+
+
+ **How to Use:**
+-Register arrival:
+  1. Choose between bulk registration or individual registration.
+  2. Specify the recipient receiving the commodities by filling out the "Stored by" field in the form.
+  3. For each commodity, input the quantity in the designated field.
+  4. Optionally, set the time of delivery using the provided time field (auto-filled by default).
+  5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below.
+
+- Check earlier deliverys and View Details:
+    1. Locate the desired delivery in the "Delivery Arrival History" table.
+    2. Click on "View Details" to access comprehensive information about the selected delivery.
+
+
+
 
 ## Technologies Used
 
