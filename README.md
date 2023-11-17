@@ -81,6 +81,7 @@ The application consist of three main pages:
   - Clicking "Register Arrival" adds the delivery details to the "Delivery Arrival History" table.
   - Users can view detailed information in the "Delivery Arrival History" table by clicking on the "View Details" button.
   - Users can set the time of delivery, ensuring accurate tracking of arrival details.
+  - A toast message will appear at the top of the screen upon clicking "Register" to confirm the successful registration of the delivery.
 
 
 
@@ -90,7 +91,7 @@ The application consist of three main pages:
       2. Specify the recipient receiving the commodities by filling out the "Stored by" field in the form.
       3. For each commodity, input the quantity in the designated field.
       4. Optionally, set the time of delivery using the provided time field (auto-filled by default).
-      5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below.
+      5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below, and a toastmessage at the top of the screen.
 
   - Check earlier deliverys and View Details:
       1. Locate the desired delivery in the "Delivery Arrival History" table.
