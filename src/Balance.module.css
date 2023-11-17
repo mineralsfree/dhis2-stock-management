@@ -48,3 +48,12 @@
   width: 100%;
   margin-bottom: 8px;
 }
+
+.info{
+
+       alignItems: 'center';
+       display: 'flex';
+        height: 200;
+        justifyContent: 'center';
+        width: 1000;
+}

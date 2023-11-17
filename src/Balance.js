@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useDataQuery} from '@dhis2/app-runtime'
 import {CircularLoader} from "@dhis2/ui";
 import {ClinicTable} from "./ClinicTable";
+import styles from "./Balance.module.css";
 
 import {
   Table,
@@ -16,6 +17,9 @@ import {
   ButtonStrip,
   FlyoutMenu,
   MenuItem,
+  IconInfo16,
+  Tooltip,
+  
 } from "@dhis2/ui";
 
 import styles from './Balance.module.css'
@@ -144,7 +148,13 @@ export function Balance() {
 
   return (
     <div>
-      <h1>Balance</h1>
+      <h1>Stock Balance
+       <Tooltip className={styles.info}
+                content="huh"
+                placement="right">
+            < IconInfo16/>
+        </Tooltip>
+     </h1>
       <ButtonStrip className={styles.buttonContainer}>
         <InputField
           name="defaultName"
