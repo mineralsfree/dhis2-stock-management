@@ -1,7 +1,7 @@
 .my-form {
     display: flex;
     flex-direction: column;
-    border: '1px solid ';
+    border: 1px solid;
     
     width: 500px;
     justify-content: center;
@@ -53,10 +53,9 @@
 
 
 .button-container{
-    border: '1px solid #c4c9cc';
-    padding: 8;
-    width: '100%';
-
+    border: 1px solid #c4c9cc;
+    width: 100%;
+    margin-top: 8px;
 }
 
 

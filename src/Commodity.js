@@ -17,6 +17,7 @@ import { useCommodities } from "./hooks/useCommodities";
 import { useDispenseHistory } from "./hooks/useDispenseHistory";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
 import toast, { Toaster } from "react-hot-toast";
+import {ORG_UNIT} from "./consts";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -25,7 +26,7 @@ const dataMutationQuery = {
   completeDate: ({ completeDate }) => completeDate,
   data: ({ dataValues }) => ({
     period: "202310",
-    orgUnit: "ImspTQPwCqd",
+    orgUnit: ORG_UNIT,
     dataValues: dataValues.map((dataValue) => ({
       dataElement: dataValue.dataElement,
       categoryOptionCombo: dataValue.categoryOptionCombo, // consumption

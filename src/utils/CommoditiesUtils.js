@@ -1,4 +1,4 @@
-import { END_BALANCE_ID } from "../consts";
+import { END_BALANCE_ID, ORG_UNIT } from "../consts";
 
 export const commoditiesToOptions = (commodities) => {
   const commodityOptions = [];
@@ -31,19 +31,18 @@ export const stockBalanceById = (commodityOptions, id) =>
   parseInt(commodityOptions.find((com) => com.value === id).inStock);
 
 export const registerCommodityQuery = {
-  dataSet: "ULowA8V3ucd",
-  resource: "dataValueSets",
-  type: "create",
-  data: (values) => ({
-    period: "202310",
-    orgUnit: "ImspTQPwCqd",
-    dataValues: [
-      {
-        dataElement: values.commodity,
-        categoryOptionCombo: END_BALANCE_ID, // End Balance
-        value: values.balance.endBalance + Number(values.amount),
-        storedBy: values.storedBy,
-      },
-    ],
-  }),
-};
+    dataSet: "ULowA8V3ucd",
+    resource: "dataValueSets",
+    type: "create",
+    data: (values) => ({
+        period: "202310",
+        orgUnit: ORG_UNIT,
+        dataValues: [
+            {
+                dataElement: values.commodity,
+                categoryOptionCombo: END_BALANCE_ID, // End Balance
+                value: values.balance.endBalance + Number(values.amount),
+                storedBy: values.storedBy
+            }]
+    })
+}
