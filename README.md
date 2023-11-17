@@ -1,8 +1,9 @@
 # DHIS2 Stock Management Application for Whotopia Health Clinics
 
-## Project Description
+
 
 > Develop a user-friendly DHIS2 application for Whotopia health clinics to track commodity transactions, integrate with the DHIS2 API for real-time updates, and automatically manage stock data, enhancing efficiency and accuracy in logistics planning.
+## Project Description
 
 ### Background
 
