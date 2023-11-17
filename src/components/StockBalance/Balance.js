@@ -95,7 +95,7 @@ export function Balance() {
     const matchedValue = data.commoditiesValue.dataValues.find(
       (dataValues) =>
         dataValues.dataElement === d.dataElement.id &&
-        dataValues.categoryOptionCombo === "rQLFnNXXIL0",
+        dataValues.categoryOptionCombo === "rQLFnNXXIL0"
     );
     const category = d.dataElement.dataElementGroups
       .sort((a, b) => b.name.length - a.name.length)[0]
@@ -127,7 +127,7 @@ export function Balance() {
   if (sortArg === "alphCom" || sortArg === "alphAll") {
     Object.keys(groupedData).map((category) => {
       groupedData[category].sort((el1, el2) =>
-        el1.displayName.localeCompare(el2.displayName),
+        el1.displayName.localeCompare(el2.displayName)
       );
     });
   }
@@ -248,7 +248,6 @@ export function Balance() {
             unselectCommodity={() => setSelectedCommodity(null)}
           />
         )}
-      </div>
       </Card>
     </div>
   );
