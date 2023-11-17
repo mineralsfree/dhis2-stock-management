@@ -70,8 +70,12 @@ export function Balance() {
   const [sortArg, setSortArg] = useState("alphAll");
   const { loading, error, data } = useDataQuery(dataQuery);
   const [selectedCommodity, setSelectedCommodity] = useState(null);
-  const handleClick = (comodity) => {
-    setSelectedCommodity(comodity);
+  const handleClick = (commodity) => {
+    if (selectedCommodity === commodity) {
+      setSelectedCommodity(null);
+      return;
+    }
+    setSelectedCommodity(commodity);
   };
 
   if (error) {
@@ -238,6 +242,13 @@ export function Balance() {
             )}
           </div>
         </div>
+        {selectedCommodity && (
+          <ClinicTable
+            selectedCommodity={selectedCommodity}
+            unselectCommodity={() => setSelectedCommodity(null)}
+          />
+        )}
+      </div>
       </Card>
     </div>
   );

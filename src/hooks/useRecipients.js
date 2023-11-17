@@ -29,7 +29,6 @@ export const useRecipients = () => {
     setRecipients(null);
   }
   if (data && !recipients) {
-    console.log("recipients", data);
     setRecipients(Object.values(data.recipients.recipients));
   }
   return { loading: loading || refetchLoading, error, recipients, refetch };

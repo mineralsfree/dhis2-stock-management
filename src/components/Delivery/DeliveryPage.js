@@ -42,10 +42,6 @@ export function DeliveryPage({ user }) {
   const [selectedTab, setSelectedTab] = useState("bulk");
 
   const registerDelivery = async (input) => {
-    console.log("registered delivery");
-    console.log(input);
-    console.log(deliveryHistory);
-
     const completeDate = `${input.completeDate}:00.000`;
 
     const historyDataValues = input.dataValues.map((dataValue) => ({
@@ -73,7 +69,6 @@ export function DeliveryPage({ user }) {
 
     await Promise.all(promises)
       .then(() => {
-        console.log("done");
         toast.success("Delivery registered", {
           duration: 4000,
         });
