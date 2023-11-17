@@ -28,7 +28,7 @@ export const RecipientAddForm = (props) => {
         mutate([...recipients, { name: values.name, dep: values.department }])
           .then(() => {
             toast.success(
-              `Successfully added ${values.name} to recipients database`
+              `Successfully added ${values.name} to recipients database`,
             );
             close();
             recipientsRefetch();
@@ -36,7 +36,7 @@ export const RecipientAddForm = (props) => {
           .catch((err) => {
             console.log(err);
             toast.error(
-              `Error while adding recipient, check your internet connection`
+              `Error while adding recipient, check your internet connection`,
             );
           });
       }}

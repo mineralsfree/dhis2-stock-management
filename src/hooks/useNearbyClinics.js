@@ -39,7 +39,7 @@ const mergeData = (data) => {
     let endBalances = data.commoditiesValue.dataValues.filter(
       (dataValues) =>
         dataValues.dataElement === d.dataElement.id &&
-        dataValues.categoryOptionCombo === END_BALANCE_ID
+        dataValues.categoryOptionCombo === END_BALANCE_ID,
     );
     endBalances
       .filter((endBalance) => endBalance.orgUnit !== ORG_UNIT)
@@ -50,7 +50,7 @@ const mergeData = (data) => {
           endBalance: endBalance.value,
           orgUnitName:
             data.orgUnit.children.find(
-              (child) => child.id === endBalance.orgUnit
+              (child) => child.id === endBalance.orgUnit,
             )?.name || endBalance.orgUnit,
           orgUnit: endBalance.orgUnit,
         };

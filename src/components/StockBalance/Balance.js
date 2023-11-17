@@ -244,16 +244,13 @@ export function Balance() {
               </Table>
             </div>
             {selectedCommodity && (
-              <ClinicTable selectedCommodity={selectedCommodity} />
+              <ClinicTable
+                selectedCommodity={selectedCommodity}
+                unselectCommodity={() => setSelectedCommodity(null)}
+              />
             )}
           </div>
         </div>
-        {selectedCommodity && (
-          <ClinicTable
-            selectedCommodity={selectedCommodity}
-            unselectCommodity={() => setSelectedCommodity(null)}
-          />
-        )}
       </Card>
     </div>
   );

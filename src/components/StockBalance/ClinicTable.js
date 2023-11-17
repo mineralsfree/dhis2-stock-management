@@ -25,7 +25,7 @@ const ClinicTable = (props) => {
   }
 
   const selectedClinics = nearbyClinics.filter(
-    (clinics) => clinics.displayName === selectedCommodity
+    (clinics) => clinics.displayName === selectedCommodity,
   );
   return (
     <div style={{ flex: 1, marginLeft: "5px" }}>
@@ -63,7 +63,7 @@ const ClinicTable = (props) => {
                     primary
                     onClick={() =>
                       toast.success(
-                        `Requested ${selectedCommodity} from ${clincs.orgUnitName}`
+                        `Requested ${selectedCommodity} from ${clincs.orgUnitName}`,
                       )
                     }
                   >

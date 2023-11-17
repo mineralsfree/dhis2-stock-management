@@ -5,7 +5,7 @@ import styles from "./InfoBox.module.css";
 export const InfoBox = (props) => {
   const { title, text, id } = props;
   const [shown, setShown] = useState(
-    localStorage.getItem(`info_box_${id}`) !== "true"
+    localStorage.getItem(`info_box_${id}`) !== "true",
   );
   const handleNeverShowClick = (id) => {
     setShown(false);
