@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useDataQuery} from "@dhis2/app-runtime";
-import {CONSUMPTION_ID, END_BALANCE_ID} from "../consts";
+import {CONSUMPTION_ID, END_BALANCE_ID, ORG_UNIT} from "../consts";
 
 
 const dataQuery = {
@@ -19,7 +19,7 @@ const dataQuery = {
         params: {
             dataSet: 'ULowA8V3ucd',
             period: '202310',
-            orgUnit: "ImspTQPwCqd"
+            orgUnit: ORG_UNIT
         }
     }
 }

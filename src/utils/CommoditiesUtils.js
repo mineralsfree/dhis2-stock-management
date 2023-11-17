@@ -1,4 +1,4 @@
-import {END_BALANCE_ID} from "../consts";
+import {END_BALANCE_ID, ORG_UNIT} from "../consts";
 
 export const commoditiesToOptions = (commodities) => {
     const commodityOptions = [];
@@ -31,7 +31,7 @@ export const registerCommodityQuery = {
     type: "create",
     data: (values) => ({
         period: "202310",
-        orgUnit: "ImspTQPwCqd",
+        orgUnit: ORG_UNIT,
         dataValues: [
             {
                 dataElement: values.commodity,

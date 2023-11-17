@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { CircularLoader } from "@dhis2/ui";
+import React, {useState} from "react";
+import {CircularLoader} from "@dhis2/ui";
 import styles from './Balance.module.css';
 
 import {
@@ -10,58 +10,53 @@ import {
   TableHead,
   TableRow,
   TableRowHead,
+  Button,
 } from "@dhis2/ui";
+import {useNearbyClinics} from "./hooks/useNearbyClinics";
+import * as PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
-const ClinicTable = () => {
-  const [selectedCommodity, setSelectedCommodity] = useState(null);
+function Input(props) {
+  return null;
+}
+
+Input.propTypes = {name: PropTypes.string};
+const ClinicTable = (props) => {
+  const {selectedCommodity} = props
   const [requestError, setRequestError] = useState(false);
+  const {nearbyClinics} = useNearbyClinics();
+  if (!nearbyClinics) {
+    return <CircularLoader/>
+  }
 
-  const handleRequestClick = () => {
-    if (selectedCommodity) {
-      alert(`{/*{selectedCommodity.value}  */}  {/*{selectedCommodity.displayName}  */} is requested`);
-    } else {
-      setRequestError(true);
-    }
-  };
-
-
-
+  const selectedClinics = nearbyClinics.filter(clinics => clinics.displayName === selectedCommodity);
   return (
-    <div style={{ flex: 1, marginLeft: "5px" }}>
-      <h3> {/*{selectedCommodity.displayName}  */}request from nearby clinics</h3>
+    <div style={{flex: 1, marginLeft: "5px"}}>
+      <h3> {selectedCommodity} request from nearby clinics</h3>
       <Table>
         <TableHead>
-          <TableRowHead className={styles.category} >
-            <TableCellHead>Distance</TableCellHead>
+          <TableRowHead className={styles.category}>
+            {/*<TableCellHead>OrganisationUnit id</TableCellHead>*/}
             <TableCellHead>Clinic</TableCellHead>
             <TableCellHead>Stock balance</TableCellHead>
-            <TableCellHead>Commodity</TableCellHead>
+            <TableCellHead>Request</TableCellHead>
           </TableRowHead>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>{/* Distance */}</TableCell>
-            <TableCell>{/* Clinic name */}</TableCell>
-            <TableCell>{/* /}{selectedCommodity.value}  */}</TableCell>
-            <TableCell>
-              <input
-                type="number"
-                id="tentacles"
-                name="tentacles"
-                min="10"
-                max="100"
-              />
+          {selectedClinics.map(clincs => {
+            return (<TableRow key={clincs.orgUnitName}>
+              {/*<TableCell>{clincs.orgUnit}</TableCell>*/}
+              <TableCell>{clincs.orgUnitName}</TableCell>
+              <TableCell>{clincs.endBalance}</TableCell>
+              <TableCell>
+                <Input type='number' name="req" />
+                <Button primary onClick={()=>toast.success(`Requested ${selectedCommodity} from ${clincs.orgUnitName}`)}>
+                  Request
+                </Button>
+              </TableCell>
+            </TableRow>)
+          })}
 
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={handleRequestClick}
-              >
-                Request
-              </button>
-
-            </TableCell>
-          </TableRow>
         </TableBody>
       </Table>
       {requestError && (
@@ -73,4 +68,4 @@ const ClinicTable = () => {
   );
 };
 
-export { ClinicTable };
+export {ClinicTable};
