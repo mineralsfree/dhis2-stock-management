@@ -66,7 +66,7 @@ const dataQuery = {
 
 export function Balance() {
   const [searchWord, setSearchWord] = useState("");
-  const [sortArg, setSortArg] = useState("");
+  const [sortArg, setSortArg] = useState("alphAll");
   const { loading, error, data } = useDataQuery(dataQuery);
   const [selectedCommodity, setSelectedCommodity] = useState(null);
   const handleClick = (comodity) => {
