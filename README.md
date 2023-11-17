@@ -99,6 +99,33 @@ The application consist of three main pages:
       2. Click on "View Details" to access comprehensive information about the selected delivery.
 
 
+## Screenshots of the Appllication
+
+### 1. Stock Balance
+<img width="1422" alt="Skjermbilde 2023-11-17 kl  21 26 33" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/bac4bd8d-a5a6-4ea7-92a3-445933f2e0e5">
+
+<img width="1431" alt="Skjermbilde 2023-11-17 kl  21 26 48" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/5bf3ea0b-fe4b-41be-ad59-ad5079c0b8e8">
+
+
+### 2. Dispens Commodity
+<img width="1432" alt="Skjermbilde 2023-11-17 kl  21 27 43" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/ad705e0f-6de6-471d-b5fd-15a11d435170">
+
+<img width="1426" alt="Skjermbilde 2023-11-17 kl  21 27 59" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/f0c5071e-e60e-4e24-8ee1-9e25aa6b829e">
+
+
+### 3. Register Delivery
+<img width="1427" alt="Skjermbilde 2023-11-17 kl  21 28 32" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/42a59a38-6155-44ce-9397-6103fc047346">
+
+
+<img width="1440" alt="Skjermbilde 2023-11-17 kl  21 28 44" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/afd9ae6c-9d67-42ad-a6f6-38b1e643e434">
+
+
+<img width="1429" alt="Skjermbilde 2023-11-17 kl  21 29 00" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/cfeef7be-4f74-433e-9986-e4893aaf4fec">
+
+<img width="1427" alt="Skjermbilde 2023-11-17 kl  21 29 23" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/9668f683-3abf-40b4-b74e-d1f67a7b2e2c">
+
+
+
 
 
 ## Technologies Used
