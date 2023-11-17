@@ -8,4 +8,3 @@ const altNearbyClinics = ["IWb1hstfROc", "lpAPY3QOY2D", "Jyv7sjpl9bA"];
 export const getNearbyClinics = () => {
   return altNearbyClinics;
 };
-
