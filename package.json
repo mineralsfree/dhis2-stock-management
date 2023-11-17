@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^10.3.10",
-    "eslint": "^8",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
