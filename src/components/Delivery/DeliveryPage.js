@@ -9,6 +9,7 @@ import { useDeliveryHistory } from "../../hooks/useDeliveryHistory";
 import toast, { Toaster } from "react-hot-toast";
 import PropTypes from "prop-types";
 import { PageHeading } from "../PageHeading/PageHeading";
+import { ORG_UNIT } from "../../consts";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -17,7 +18,7 @@ const dataMutationQuery = {
   completeDate: ({ completeDate }) => completeDate,
   data: ({ dataValues }) => ({
     period: "202310",
-    orgUnit: "ImspTQPwCqd",
+    orgUnit: ORG_UNIT,
     dataValues: dataValues.map((dataValue) => ({
       dataElement: dataValue.dataElement,
       categoryOptionCombo: "rQLFnNXXIL0", // endBalance
