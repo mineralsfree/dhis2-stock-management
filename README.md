@@ -108,6 +108,8 @@ The application consist of three main pages:
 
 <img width="1433" alt="Skjermbilde 2023-11-17 kl  23 04 30" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/d4988efa-25c8-4868-a0e8-92810419e304">
 
+<img width="1435" alt="Skjermbilde 2023-11-17 kl  23 14 02" src="https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/7c2f5e11-7f9e-4815-941c-7af7017b18b2">
+
 
 
 ### 2. Dispens Commodity
