@@ -6,7 +6,9 @@ import {
     composeValidators,
     InputFieldFF,
     Card,
-    SingleSelectFieldFF
+    SingleSelectFieldFF,
+    Tooltip,
+    IconInfo24
 } from "@dhis2/ui";
 import "../../styles.css";
 import styles from './CommodityDeliveryRegistration.module.css';
@@ -39,9 +41,18 @@ export const CommodityDeliveryRegistrationPage = (props) => {
     const stockBalance = (id) => stockBalanceById(commodityOptions, id);
     if (commodities) {
         return (
+            <div>
+                 <div className={styles.stripe}>
+                    <h1>Register Commodity Arrival</h1>
+                    <Tooltip className={styles.info}
+                        content="This page enables you to register incoming commodities, either in bulk or individually. Below, you can view the delivery history."
+                        placement="right">
+                    < IconInfo24/>
+              </Tooltip>
+        </div> 
             <div className={styles.form}>
                 <Card className={styles.card}>
-                    <h3>Register commodity arrival</h3>
+                   {/*} <h3>Register commodity arrival</h3>*/}
                     <ReactFinalForm.Form
                         initialValues={{storedBy: user.name}}
                         className={styles.form}
@@ -114,6 +125,8 @@ export const CommodityDeliveryRegistrationPage = (props) => {
                     </ReactFinalForm.Form>
                 </Card>
                 <Toaster></Toaster>
+            </div>
+
             </div>
         )
     }

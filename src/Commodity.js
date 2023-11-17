@@ -2,6 +2,7 @@ import React from "react";
 import { useDataMutation } from "@dhis2/app-runtime";
 import { CircularLoader } from "@dhis2/ui";
 import "./styles.css";
+
 import {
   Table,
   TableBody,
@@ -11,6 +12,9 @@ import {
   TableRow,
   TableRowHead,
   Card,
+  Tooltip,
+  IconInfo24,
+ 
 } from "@dhis2/ui";
 import { formatDatetime } from "./utils/formatting";
 import { useCommodities } from "./hooks/useCommodities";
@@ -18,6 +22,7 @@ import { useDispenseHistory } from "./hooks/useDispenseHistory";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
 import toast, { Toaster } from "react-hot-toast";
 import {ORG_UNIT} from "./consts";
+import styles from './Commodity.module.css'
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -117,6 +122,14 @@ export function Commodity() {
         marginBottom: "15px",
       }}
     >
+       <div className={styles.stripe}>
+            <h1>Register Dispens of Commodities</h1>
+            <Tooltip className={styles.info}
+                        content="This page allows you to easily record the dispensing of commodities using the form below. You can also register new recipients, and the table beneath the form displays the dispensing history."
+                        placement="right">
+                    < IconInfo24/>
+              </Tooltip>
+        </div> 
       <Toaster />
       <CommodityDispenseForm handleRegister={handleSubmit} />
       <DispenseHistoryTable useDispenseHistory={useHistory} />
@@ -145,6 +158,9 @@ function DispenseHistoryTable({ useDispenseHistory }) {
   });
 
   return (
+
+    <div>
+      
     <Card>
       <div style={{ padding: "24px" }}>
         <h3>Commodity dispense history</h3>
@@ -174,5 +190,7 @@ function DispenseHistoryTable({ useDispenseHistory }) {
         </Table>
       </div>
     </Card>
+
+    </div>
   );
 }

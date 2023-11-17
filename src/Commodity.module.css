@@ -1,0 +1,19 @@
+.info{
+
+  align-items: center;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  width: 1000px;
+  margin: 16px;
+  background-color: #6C7787;
+
+ 
+}
+
+.stripe{
+  display: flex;
+  align-items: center;
+
+
+}

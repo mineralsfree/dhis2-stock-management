@@ -11,6 +11,7 @@ import {
   Chip,
   IconAdd24,
   IconDelete24,
+
 } from "@dhis2/ui";
 
 import React, { useState } from "react";
@@ -91,7 +92,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
       >
         <Card style={{ padding: "24px", background: "white" }}>
           <div style={{ padding: "24px", width: "calc(410px + 72px)" }}>
-            <h3>Register commodity dispense</h3>
+          {/* <h3>Register commodity dispense</h3>*/}
             <ReactFinalForm.Form
               onSubmit={(values) => {
                 const data = commodityBulk.map((c) => ({

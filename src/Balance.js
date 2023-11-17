@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useDataQuery} from '@dhis2/app-runtime'
 import {CircularLoader} from "@dhis2/ui";
 import {ClinicTable} from "./ClinicTable";
-import styles from "./Balance.module.css";
+
 
 import {
   Table,
@@ -17,7 +17,7 @@ import {
   ButtonStrip,
   FlyoutMenu,
   MenuItem,
-  IconInfo16,
+  IconInfo24,
   Tooltip,
   
 } from "@dhis2/ui";
@@ -148,13 +148,14 @@ export function Balance() {
 
   return (
     <div>
-      <h1>Stock Balance
-       <Tooltip className={styles.info}
-                content="huh"
-                placement="right">
-            < IconInfo16/>
-        </Tooltip>
-     </h1>
+        <div className={styles.stripe}>
+            <h1>Stock Balance</h1>
+            <Tooltip className={styles.info}
+                        content="This page presents a tabulated overview of all commodities with their corresponding stock levels. When clicking on a commodity, the stock levels of nearby clinics are revealed, allowing you to request commodities from these clinics."
+                        placement="right">
+                    < IconInfo24/>
+              </Tooltip>
+        </div> 
       <ButtonStrip className={styles.buttonContainer}>
         <InputField
           name="defaultName"
