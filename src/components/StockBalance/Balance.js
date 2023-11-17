@@ -96,7 +96,7 @@ export function Balance() {
       .sort((a, b) => b.name.length - a.name.length)[0]
       .name.replace(/Commodities( - )?/, "");
 
-    if (!displayName.toLowerCase().includes(searchWord)) {
+    if (!displayName.toLowerCase().includes(searchWord.toLowerCase())) {
       return acc;
     }
 

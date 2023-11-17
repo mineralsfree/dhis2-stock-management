@@ -95,14 +95,14 @@ export function DeliveryPage({ user }) {
         marginBottom: "15px",
       }}
     >
+      <PageHeading
+        variant="h1"
+        title="Register Commodity Arrival"
+        content="This page enables you to register incoming commodities, either in bulk or individually. Below, you can view the delivery history."
+      />
       <Toaster />
       <Card>
         <div style={{ padding: "24px" }}>
-          <PageHeading
-            variant="h3"
-            title="Register Commodity Arrival"
-            content="This page enables you to register incoming commodities, either in bulk or individually. Below, you can view the delivery history."
-          />
           <TabBar>
             <Tab
               selected={selectedTab === "bulk"}
