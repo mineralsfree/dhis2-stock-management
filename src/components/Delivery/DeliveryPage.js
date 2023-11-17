@@ -8,6 +8,7 @@ import { useDataMutation } from "@dhis2/app-runtime";
 import { useDeliveryHistory } from "../../hooks/useDeliveryHistory";
 import toast, { Toaster } from "react-hot-toast";
 import PropTypes from "prop-types";
+import { PageHeading } from "../PageHeading/PageHeading";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -97,7 +98,11 @@ export function DeliveryPage({ user }) {
       <Toaster />
       <Card>
         <div style={{ padding: "24px" }}>
-          <h3>Delivery arrival</h3>
+          <PageHeading
+            variant="h3"
+            title="Register Commodity Arrival"
+            content="This page enables you to register incoming commodities, either in bulk or individually. Below, you can view the delivery history."
+          />
           <TabBar>
             <Tab
               selected={selectedTab === "bulk"}

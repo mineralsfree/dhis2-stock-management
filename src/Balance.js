@@ -20,6 +20,7 @@ import {
 
 import styles from "./Balance.module.css";
 import { ORG_UNIT } from "./consts";
+import { PageHeading } from "./components/PageHeading/PageHeading";
 
 const dataQuery = {
   dataSets: {
@@ -134,7 +135,11 @@ export function Balance() {
 
   return (
     <div>
-      <h1>Balance</h1>
+      <PageHeading
+        title="Stock Balance"
+        variant="h1"
+        content="This page presents a tabulated overview of all commodities with their corresponding stock levels. When clicking on a commodity, the stock levels of nearby clinics are revealed, allowing you to request commodities from these clinics."
+      />
       <ButtonStrip className={styles.buttonContainer}>
         <InputField
           name="defaultName"

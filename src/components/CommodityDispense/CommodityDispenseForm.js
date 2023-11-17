@@ -24,6 +24,7 @@ import { useRecipients } from "../../hooks/useRecipients";
 import { recipientsToOptions } from "../../utils/recepientsUtils";
 import { RecipientAddForm } from "../RecipentsAddForm/RecipientAddForm";
 import PropTypes from "prop-types";
+import { PageHeading } from "../PageHeading/PageHeading";
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
@@ -77,7 +78,11 @@ export default function CommodityDispenseForm({ handleRegister }) {
       >
         <Card>
           <div style={{ padding: "24px", width: "calc(410px + 72px)" }}>
-            <h3>Register commodity dispense</h3>
+            <PageHeading
+              title="Register Dispens of Commodities"
+              variant="h3"
+              content="This page allows you to easily record the dispensing of commodities using the form below. You can also register new recipients, and the table beneath the form displays the dispensing history."
+            ></PageHeading>
             <ReactFinalForm.Form
               onSubmit={(values) => {
                 const data = commodityBulk.map((c) => ({
