@@ -9,6 +9,7 @@ import { useDeliveryHistory } from "../../hooks/useDeliveryHistory";
 import toast, { Toaster } from "react-hot-toast";
 import PropTypes from "prop-types";
 import { PageHeading } from "../PageHeading/PageHeading";
+import { ORG_UNIT } from "../../consts";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -17,7 +18,7 @@ const dataMutationQuery = {
   completeDate: ({ completeDate }) => completeDate,
   data: ({ dataValues }) => ({
     period: "202310",
-    orgUnit: "ImspTQPwCqd",
+    orgUnit: ORG_UNIT,
     dataValues: dataValues.map((dataValue) => ({
       dataElement: dataValue.dataElement,
       categoryOptionCombo: "rQLFnNXXIL0", // endBalance
@@ -91,7 +92,7 @@ export function DeliveryPage({ user }) {
       }}
     >
       <PageHeading
-        variant="h1"
+        variant="h2"
         title="Register Commodity Arrival"
         content="This page enables you to register incoming commodities, either in bulk or individually. Below, you can view the delivery history."
       />
