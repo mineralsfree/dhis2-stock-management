@@ -248,7 +248,6 @@ export function Balance() {
             unselectCommodity={() => setSelectedCommodity(null)}
           />
         )}
-      </div>
       </Card>
     </div>
   );
