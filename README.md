@@ -58,12 +58,12 @@ The application consist of three main pages:
 
   1.  **Registering Commodity Dispense:**
 
-  - Navigate to the "Register Commodity" page.
-  - Choose the dispensing and receiving individuals from the dropdown menus.
-  - Enter the commodity name and quantity, ensuring it does not exceed the available stock.
-  - Use the "add commodity" button for multiple dispensing entries.
-  - Confirm the date and time fields, and click "Register" to submit the dispensing details.
-  - View the results in the "Commodity Dispense History" table.
+      - Navigate to the "Register Commodity" page.
+      - Choose the dispensing and receiving individuals from the dropdown menus.
+      - Enter the commodity name and quantity, ensuring it does not exceed the available stock.
+      - Use the "add commodity" button for multiple dispensing entries.
+      - Confirm the date and time fields, and click "Register" to submit the dispensing details.
+      - View the results in the "Commodity Dispense History" table.
 
   2.  **Adding a New Recipient:**
 
@@ -85,12 +85,12 @@ The application consist of three main pages:
 
 
  **How to Use:**
--Register arrival:
-  1. Choose between bulk registration or individual registration.
-  2. Specify the recipient receiving the commodities by filling out the "Stored by" field in the form.
-  3. For each commodity, input the quantity in the designated field.
-  4. Optionally, set the time of delivery using the provided time field (auto-filled by default).
-  5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below.
+- Register arrival:
+    1. Choose between bulk registration or individual registration.
+    2. Specify the recipient receiving the commodities by filling out the "Stored by" field in the form.
+    3. For each commodity, input the quantity in the designated field.
+    4. Optionally, set the time of delivery using the provided time field (auto-filled by default).
+    5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below.
 
 - Check earlier deliverys and View Details:
     1. Locate the desired delivery in the "Delivery Arrival History" table.
