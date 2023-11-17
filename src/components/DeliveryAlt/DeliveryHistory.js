@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CircularLoader,
   Table,
@@ -11,14 +12,14 @@ import {
   Modal,
   ModalTitle,
   ModalContent,
-  ModalActions,
 } from "@dhis2/ui";
 import { formatDatetime } from "../../utils/formatting";
 import { useState } from "react";
 import styles from "./Delivery.module.css";
+import * as PropTypes from "prop-types";
 
 export function DeliveryHistory({ useDeliveryHistory }) {
-  const { loading, error, deliveryHistory, refetch } = useDeliveryHistory;
+  const { loading, error, deliveryHistory } = useDeliveryHistory;
   const [modalInfo, setModalInfo] = useState(null);
 
   if (loading) {
@@ -37,8 +38,6 @@ export function DeliveryHistory({ useDeliveryHistory }) {
   const deliveryHistorySorted = deliveryHistory.sort((a, b) => {
     return new Date(b.completeDate) - new Date(a.completeDate);
   });
-
-  console.log(deliveryHistorySorted);
 
   return (
     <>
@@ -99,3 +98,6 @@ export function DeliveryHistory({ useDeliveryHistory }) {
     </>
   );
 }
+DeliveryHistory.propTypes = {
+  useDeliveryHistory: PropTypes.objectOf(PropTypes.any),
+};

@@ -15,6 +15,7 @@ import {
   commoditiesToOptions,
   stockBalanceById,
 } from "../../utils/CommoditiesUtils";
+import PropTypes from "prop-types";
 
 export const IndividualDeliveryForm = ({ user, registerDelivery }) => {
   const { loading, error, commodities, refetch } = useCommodities();
@@ -121,4 +122,9 @@ export const IndividualDeliveryForm = ({ user, registerDelivery }) => {
       </ReactFinalForm.Form>
     </div>
   );
+};
+
+IndividualDeliveryForm.propTypes = {
+  user: PropTypes.objectOf(PropTypes.any),
+  registerDelivery: PropTypes.func,
 };

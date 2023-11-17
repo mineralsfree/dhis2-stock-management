@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Table,
   TableBody,
@@ -11,7 +12,6 @@ import {
   Button,
   createMinNumber,
   SingleSelectFieldFF,
-  MultiSelectFieldFF,
   hasValue,
 } from "@dhis2/ui";
 import { useCommodities } from "../../hooks/useCommodities";
@@ -20,6 +20,7 @@ import {
   stockBalanceById,
 } from "../../utils/CommoditiesUtils";
 import styles from "./Delivery.module.css";
+import PropTypes from "prop-types";
 
 export function BulkDeliveryForm({ user, registerDelivery }) {
   const { loading, error, commodities, refetch } = useCommodities();
@@ -155,3 +156,7 @@ export function BulkDeliveryForm({ user, registerDelivery }) {
     </div>
   );
 }
+BulkDeliveryForm.propTypes = {
+  user: PropTypes.objectOf({ name: PropTypes.string }),
+  registerDelivery: PropTypes.func,
+};

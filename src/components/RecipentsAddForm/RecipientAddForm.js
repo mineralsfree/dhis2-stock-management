@@ -9,6 +9,7 @@ import {
 } from "@dhis2/ui";
 import { useDataMutation } from "@dhis2/app-runtime";
 import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
   resource: "dataStore/mikimami/recipients",
@@ -17,14 +18,14 @@ const dataMutationQuery = {
 };
 export const RecipientAddForm = (props) => {
   const { close, recipients, recipientsRefetch } = props;
-  const [mutate, {}] = useDataMutation(dataMutationQuery);
+  const [mutate] = useDataMutation(dataMutationQuery);
   return (
     <ReactFinalForm.Form
       onSubmit={(values) => {
         mutate([...recipients, { name: values.name, dep: values.department }])
-          .then((res) => {
+          .then(() => {
             toast.success(
-              `Successfully added ${values.name} to recipients database`
+              `Successfully added ${values.name} to recipients database`,
             );
             close();
             recipientsRefetch();
@@ -32,14 +33,14 @@ export const RecipientAddForm = (props) => {
           .catch((err) => {
             console.log(err);
             toast.error(
-              `Error while adding recipient, check your internet connection`
+              `Error while adding recipient, check your internet connection`,
             );
           });
 
         // handleRegister(values, setDelete);
       }}
     >
-      {({ values, handleSubmit, form }) => (
+      {({ handleSubmit }) => (
         <Card>
           <form onSubmit={handleSubmit}>
             <div className={styles.addRecipientForm}>
@@ -79,4 +80,10 @@ export const RecipientAddForm = (props) => {
       )}
     </ReactFinalForm.Form>
   );
+};
+
+RecipientAddForm.propTypes = {
+  close: PropTypes.func,
+  recipients: PropTypes.arrayOf(PropTypes.any),
+  recipientsRefetch: PropTypes.func,
 };

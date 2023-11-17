@@ -1,88 +1,83 @@
 .form {
-    width: 500px;
+  width: 500px;
 }
 
 .form > div {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 .form2 > div {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    align-items: right;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  align-items: right;
 }
 
 .formRow {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1rem;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+  gap: 10px;
 }
 .formRow2 {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    gap: 10px;
-    align-items: center;
-    
-
-
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 10px;
+  align-items: center;
 }
-.column{
-    flex-direction: column;
-    display: flex;
-
+.column {
+  flex-direction: column;
+  display: flex;
 }
 
-
-.field{
-    width: 200px;
+.field {
+  width: 200px;
 }
-.recipient_field{
-    width: 200px;
+.recipient_field {
+  width: 200px;
 }
 .formCommodityRow {
-    display: flex;
-    background-color: white;
+  display: flex;
+  background-color: white;
 }
 
-.formRecipient{
-    padding: 1em;
-    display: flex;
-    justify-content: center;
-    background-color: white;
+.formRecipient {
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  background-color: white;
 }
 .formItemRemove {
-    cursor: pointer;
-    margin: 28px 0 0 10px;
-    display: block;
+  cursor: pointer;
+  margin: 28px 0 0 10px;
+  display: block;
 }
 .amount-input {
-    display: none; /* Initially hide the input fields */
+  display: none; /* Initially hide the input fields */
 }
 
 .show-amount-input .amount-input {
-    display: block; /* Show the input fields when this class is applied */
+  display: block; /* Show the input fields when this class is applied */
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .addRecipientForm {
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
 }
 
 .addRecipientFields {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .addRecipientField {
-    width: 240px;
+  width: 240px;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu, MenuItem } from "@dhis2/ui";
+import * as PropTypes from "prop-types";
 
 export function Navigation(props) {
   return (
@@ -27,3 +28,7 @@ export function Navigation(props) {
     </Menu>
   );
 }
+Navigation.propTypes = {
+  activePage: PropTypes.string,
+  activePageHandler: PropTypes.func,
+};
