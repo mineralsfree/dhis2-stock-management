@@ -18,7 +18,7 @@ import * as PropTypes from "prop-types";
 import toast from "react-hot-toast";
 
 const ClinicTable = (props) => {
-  const { selectedCommodity } = props;
+  const { selectedCommodity, unselectCommodity } = props;
   const { nearbyClinics } = useNearbyClinics();
   if (!nearbyClinics) {
     return <CircularLoader />;
@@ -29,7 +29,14 @@ const ClinicTable = (props) => {
   );
   return (
     <div style={{ flex: 1, marginLeft: "5px" }}>
-      <h3> {selectedCommodity} request from nearby clinics</h3>
+      <div className={styles.headingRow}>
+        <h3>
+          Request <b>{selectedCommodity}</b> from nearby clinics
+        </h3>
+        <Button secondary onClick={() => unselectCommodity()}>
+          Cancel
+        </Button>
+      </div>
       <Table>
         <TableHead>
           <TableRowHead className={styles.category}>
@@ -71,6 +78,9 @@ const ClinicTable = (props) => {
     </div>
   );
 };
-ClinicTable.propTypes = { selectedCommodity: PropTypes.object };
+ClinicTable.propTypes = {
+  selectedCommodity: PropTypes.object,
+  unselectCommodity: PropTypes.func,
+};
 
 export { ClinicTable };
