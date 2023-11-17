@@ -53,7 +53,6 @@ const mergeData = (data) => {
               (child) => child.id === endBalance.orgUnit,
             )?.name || endBalance.orgUnit,
           orgUnit: endBalance.orgUnit,
-          inStock: endBalance, // remove
         };
         retObj.push(element);
       });

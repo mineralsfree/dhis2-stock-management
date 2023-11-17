@@ -9,7 +9,6 @@ export const commoditiesToOptions = (commodities) => {
         label: commodity.displayName,
         category: commodity.category,
         value: commodity.id,
-        inStock: commodity.inStock,
         consumption: commodity.consumption,
         quantityOrdered: commodity.quantityOrdered,
         endBalance: commodity.endBalance,
@@ -28,7 +27,7 @@ export const commoditiesToOptions = (commodities) => {
 };
 
 export const stockBalanceById = (commodityOptions, id) =>
-  parseInt(commodityOptions.find((com) => com.value === id).inStock);
+  parseInt(commodityOptions.find((com) => com.value === id).endBalance);
 
 export const registerCommodityQuery = {
   dataSet: "ULowA8V3ucd",

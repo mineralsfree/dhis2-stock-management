@@ -62,7 +62,6 @@ const mergeData = (data) => {
       endBalance: endBalance,
       consumption: consumption,
       quantityOrdered: quantityOrdered,
-      inStock: endBalance, // remove
       category: category,
     };
     retObj[category] = retObj[category]
