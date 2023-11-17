@@ -69,6 +69,11 @@ export default function CommodityDispenseForm({ handleRegister }) {
 
   return (
     <div className={styles.c}>
+      <PageHeading
+        title="Register Dispense of Commodities"
+        variant="h1"
+        content="This page allows you to easily record the dispensing of commodities using the form below. You can also register new recipients, and the table beneath the form displays the dispensing history."
+      />
       <div
         style={{
           display: "flex",
@@ -78,11 +83,6 @@ export default function CommodityDispenseForm({ handleRegister }) {
       >
         <Card>
           <div style={{ padding: "24px", width: "calc(410px + 72px)" }}>
-            <PageHeading
-              title="Register Dispens of Commodities"
-              variant="h3"
-              content="This page allows you to easily record the dispensing of commodities using the form below. You can also register new recipients, and the table beneath the form displays the dispensing history."
-            ></PageHeading>
             <ReactFinalForm.Form
               onSubmit={(values) => {
                 const data = commodityBulk.map((c) => ({
