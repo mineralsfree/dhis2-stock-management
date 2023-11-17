@@ -22,6 +22,7 @@ import {
 import styles from "./Balance.module.css";
 import { ORG_UNIT } from "../../consts";
 import { PageHeading } from "../PageHeading/PageHeading";
+import { InfoBox } from "../InfoBox/InfoBox";
 
 const dataQuery = {
   dataSets: {
@@ -152,6 +153,11 @@ export function Balance() {
         variant="h2"
         content="This page presents a tabulated overview of all commodities with their corresponding stock levels. When clicking on a commodity, the stock levels of nearby clinics are revealed, allowing you to request commodities from these clinics."
       />
+      <InfoBox
+        id={"balance-info-box"}
+        title="How to request Commodities"
+        text="When clicking on a commodity, the stock levels of nearby clinics are revealed, allowing you to request commodities from these clinics."
+      ></InfoBox>
       <Card>
         <div style={{ padding: "24px" }}>
           <ButtonStrip className={styles.buttonContainer}>
