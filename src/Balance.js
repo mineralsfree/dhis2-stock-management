@@ -196,26 +196,26 @@ export function Balance() {
                     </TableCell>
                   </TableRow>
                   {groupedData[category].map((row) => (
-                    <TableRow
-                      key={row.id}
-                      className={
-                        styles.tablerow +
-                        (selectedCommodity === row.displayName
-                          ? ` ${styles.tablerow_active}`
-                          : "")
-                      }
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/jsx-key
+                    <div
+                      className={styles.tableRowWrapper}
+                      onClick={() => handleClick(row.displayName)}
                     >
-                      <TableCell></TableCell>
-                      <TableCell>
-                        <button
-                          className={styles.tablebtn}
-                          onClick={() => handleClick(row.displayName)}
-                        >
-                          {row.displayName}
-                        </button>
-                      </TableCell>
-                      <TableCell>{row.value}</TableCell>
-                    </TableRow>
+                      <TableRow
+                        key={row.id}
+                        className={
+                          styles.tablerow +
+                          (selectedCommodity === row.displayName
+                            ? ` ${styles.tablerow_active}`
+                            : "")
+                        }
+                        onClick={() => handleClick(row.displayName)}
+                      >
+                        <TableCell></TableCell>
+                        <TableCell>{row.displayName}</TableCell>
+                        <TableCell>{row.value}</TableCell>
+                      </TableRow>
+                    </div>
                   ))}
                 </React.Fragment>
               ))}

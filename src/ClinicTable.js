@@ -44,8 +44,14 @@ const ClinicTable = (props) => {
               <TableRow key={clincs.orgUnitName}>
                 <TableCell>{clincs.orgUnitName}</TableCell>
                 <TableCell>{clincs.endBalance}</TableCell>
-                <TableCell>
-                  <Input type="number" name="req" />
+                <TableCell className={styles.requestCell}>
+                  <span>Amount:</span>
+                  <Input
+                    className={styles.requestInput}
+                    type="number"
+                    name="req"
+                    max={clincs.endBalance}
+                  />
                   <Button
                     primary
                     onClick={() =>
