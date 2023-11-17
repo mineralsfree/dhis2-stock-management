@@ -1,6 +1,7 @@
 import React from "react";
 import { useDataMutation } from "@dhis2/app-runtime";
 import { useDispenseHistory } from "../../hooks/useDispenseHistory";
+import { PageHeading } from "../PageHeading/PageHeading";
 import CommodityDispenseForm from "./CommodityDispenseForm";
 import { DispenseHistoryTable } from "./DispenseHistoryTable";
 import toast, { Toaster } from "react-hot-toast";
@@ -106,6 +107,11 @@ export function CommodityDispense() {
       }}
     >
       <Toaster />
+      <PageHeading
+        title="Register Dispense of Commodities"
+        variant="h2"
+        content="This page allows you to easily record the dispensing of commodities using the form below. You can also register new recipients, and the table beneath the form displays the dispensing history."
+      />
       <CommodityDispenseForm handleRegister={handleSubmit} />
       <DispenseHistoryTable useDispenseHistory={useHistory} />
     </div>

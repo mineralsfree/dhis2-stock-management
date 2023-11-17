@@ -9,7 +9,7 @@
 
 .stripe {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 .stripe > span {
   margin-left: 1rem;
@@ -17,4 +17,9 @@
 
 .stripe > span:hover {
   cursor: pointer;
+}
+.title {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
 }

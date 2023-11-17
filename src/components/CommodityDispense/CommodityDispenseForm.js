@@ -24,10 +24,10 @@ import { useRecipients } from "../../hooks/useRecipients";
 import { recipientsToOptions } from "../../utils/recepientsUtils";
 import { RecipientAddForm } from "../RecipentsAddForm/RecipientAddForm";
 import PropTypes from "prop-types";
-import { PageHeading } from "../PageHeading/PageHeading";
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
+  // const [selectedCommodities, setSelectedCommodities] = useState([]);
 
   const {
     loading: commoditiesLoading,
@@ -35,16 +35,20 @@ export default function CommodityDispenseForm({ handleRegister }) {
     commodities,
     refetch,
   } = useCommodities();
+
   const {
     recipients,
     loading: recipientsLoading,
     refetch: recipientsRefetch,
   } = useRecipients();
+
   const recipientsOptions = recipientsToOptions(recipients);
   const [showForm, setShowForm] = useState(false);
+
   if (commoditiesLoading || recipientsLoading) {
     return <CircularLoader large />;
   }
+
   if (error) {
     return <span>ERROR: {error.message}</span>;
   }
@@ -63,17 +67,8 @@ export default function CommodityDispenseForm({ handleRegister }) {
     return commodity ? commodity.label : "";
   };
 
-  // console.log("Commodities");
-  // console.log(commodities);
-  // console.log(commodityOptions);
-
   return (
     <div className={styles.c}>
-      <PageHeading
-        title="Register Dispense of Commodities"
-        variant="h1"
-        content="This page allows you to easily record the dispensing of commodities using the form below. You can also register new recipients, and the table beneath the form displays the dispensing history."
-      />
       <div
         style={{
           display: "flex",
@@ -89,10 +84,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                   dataElement: values[`commodity_${c}`],
                   amount: parseInt(values[`amount_${c}`]),
                   currentConsumption: currentConsumption(
-                    values[`commodity_${c}`],
+                    values[`commodity_${c}`]
                   ),
                   currentEndBalance: getCurrentEndBalance(
-                    values[`commodity_${c}`],
+                    values[`commodity_${c}`]
                   ),
                   displayName: getDisplayName(values[`commodity_${c}`]),
                 }));
@@ -169,10 +164,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                                 1,
                                 values[`commodity_${c}`]
                                   ? getCurrentEndBalance(
-                                      values[`commodity_${c}`],
+                                      values[`commodity_${c}`]
                                     )
-                                  : Infinity,
-                              ),
+                                  : Infinity
+                              )
                             )}
                             required
                           />
@@ -183,7 +178,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                             className={styles.formItemRemove}
                             onClick={() => {
                               setCommodityBulk((curr) =>
-                                curr.filter((cc) => cc !== c),
+                                curr.filter((cc) => cc !== c)
                               );
                               // reset the values
                               values[`commodity_${c}`] = undefined;
@@ -209,7 +204,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       onClick={() => {
                         const lastVal = commodityBulk[commodityBulk.length - 1];
                         setCommodityBulk((curr) =>
-                          curr.concat([`${parseInt(lastVal) + 1}`]),
+                          curr.concat([`${parseInt(lastVal) + 1}`])
                         );
                       }}
                       selected

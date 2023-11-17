@@ -4,6 +4,7 @@ import { CircularLoader } from "@dhis2/ui";
 import { ClinicTable } from "./ClinicTable";
 
 import {
+  Card,
   Table,
   TableBody,
   TableCell,
@@ -90,7 +91,7 @@ export function Balance() {
     const matchedValue = data.commoditiesValue.dataValues.find(
       (dataValues) =>
         dataValues.dataElement === d.dataElement.id &&
-        dataValues.categoryOptionCombo === "rQLFnNXXIL0",
+        dataValues.categoryOptionCombo === "rQLFnNXXIL0"
     );
     const category = d.dataElement.dataElementGroups
       .sort((a, b) => b.name.length - a.name.length)[0]
@@ -122,7 +123,7 @@ export function Balance() {
   if (sortArg === "alphCom" || sortArg === "alphAll") {
     Object.keys(groupedData).map((category) => {
       groupedData[category].sort((el1, el2) =>
-        el1.displayName.localeCompare(el2.displayName),
+        el1.displayName.localeCompare(el2.displayName)
       );
     });
   }
@@ -134,103 +135,110 @@ export function Balance() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        marginBottom: "15px",
+      }}
+    >
       <PageHeading
         title="Stock Balance"
-        variant="h1"
+        variant="h2"
         content="This page presents a tabulated overview of all commodities with their corresponding stock levels. When clicking on a commodity, the stock levels of nearby clinics are revealed, allowing you to request commodities from these clinics."
       />
-      <ButtonStrip className={styles.buttonContainer}>
-        <InputField
-          name="defaultName"
-          onChange={(word) => {
-            setSearchWord(word.value);
-          }}
-          placeholder="Search"
-          inputWidth="220px"
-          value={searchWord}
-        />
-        <DropdownButton
-          component={
-            <FlyoutMenu>
-              <MenuItem
-                label="Alphabetically"
-                onClick={() => setSortArg("alphAll")}
-              />
-              <MenuItem
-                label="Alphabetically After Category"
-                onClick={() => setSortArg("alphCat")}
-              />
-              <MenuItem
-                label="Alphabetically After Commodity"
-                onClick={() => setSortArg("alphCom")}
-              />
-              <MenuItem
-                label="Stock Balance"
-                onClick={() => setSortArg("stock")}
-              />
-              <MenuItem
-                label="Clear Sorting Choice"
-                onClick={() => setSortArg("clear")}
-              />
-            </FlyoutMenu>
-          }
-          name="buttonName"
-          value="buttonValue"
-        >
-          Sort
-        </DropdownButton>
-      </ButtonStrip>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1 }}>
-          <Table>
-            <TableHead>
-              <TableRowHead>
-                <TableCellHead>Category</TableCellHead>
-                <TableCellHead>Commodity</TableCellHead>
-                <TableCellHead>Stock balance</TableCellHead>
-              </TableRowHead>
-            </TableHead>
+      <Card>
+        <div style={{ padding: "24px" }}>
+          <ButtonStrip className={styles.buttonContainer}>
+            <InputField
+              name="defaultName"
+              onChange={(word) => {
+                setSearchWord(word.value);
+              }}
+              placeholder="Search"
+              inputWidth="220px"
+              value={searchWord}
+            />
+            <DropdownButton
+              component={
+                <FlyoutMenu>
+                  <MenuItem
+                    label="Alphabetically"
+                    onClick={() => setSortArg("alphAll")}
+                  />
+                  <MenuItem
+                    label="Alphabetically After Category"
+                    onClick={() => setSortArg("alphCat")}
+                  />
+                  <MenuItem
+                    label="Alphabetically After Commodity"
+                    onClick={() => setSortArg("alphCom")}
+                  />
+                  <MenuItem
+                    label="Stock Balance"
+                    onClick={() => setSortArg("stock")}
+                  />
+                </FlyoutMenu>
+              }
+              name="buttonName"
+              value="buttonValue"
+            >
+              Sort
+            </DropdownButton>
+          </ButtonStrip>
+          <div style={{ display: "flex" }}>
+            <div style={{ flex: 1 }}>
+              <Table>
+                <TableHead>
+                  <TableRowHead>
+                    <TableCellHead>Category</TableCellHead>
+                    <TableCellHead>Commodity</TableCellHead>
+                    <TableCellHead>Stock balance</TableCellHead>
+                  </TableRowHead>
+                </TableHead>
 
-            <TableBody>
-              {sortedCategories.map((category) => (
-                <React.Fragment key={category}>
-                  <TableRow>
-                    <TableCell colSpan="3" className={styles.category}>
-                      {category}
-                    </TableCell>
-                  </TableRow>
-                  {groupedData[category].map((row) => (
-                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/jsx-key
-                    <div
-                      className={styles.tableRowWrapper}
-                      onClick={() => handleClick(row.displayName)}
-                    >
-                      <TableRow
-                        key={row.id}
-                        className={
-                          styles.tablerow +
-                          (selectedCommodity === row.displayName
-                            ? ` ${styles.tablerow_active}`
-                            : "")
-                        }
-                        onClick={() => handleClick(row.displayName)}
-                      >
-                        <TableCell></TableCell>
-                        <TableCell>{row.displayName}</TableCell>
-                        <TableCell>{row.value}</TableCell>
+                <TableBody>
+                  {sortedCategories.map((category) => (
+                    <React.Fragment key={category}>
+                      <TableRow>
+                        <TableCell colSpan="3" className={styles.category}>
+                          {category}
+                        </TableCell>
                       </TableRow>
-                    </div>
+                      {groupedData[category].map((row) => (
+                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions,react/jsx-key
+                        <div
+                          className={styles.tableRowWrapper}
+                          onClick={() => handleClick(row.displayName)}
+                        >
+                          <TableRow
+                            key={row.id}
+                            className={
+                              styles.tablerow +
+                              (selectedCommodity === row.displayName
+                                ? ` ${styles.tablerow_active}`
+                                : "")
+                            }
+                            onClick={() => handleClick(row.displayName)}
+                          >
+                            <TableCell></TableCell>
+                            <TableCell>{row.displayName}</TableCell>
+                            <TableCell>{row.value}</TableCell>
+                          </TableRow>
+                        </div>
+                      ))}
+                    </React.Fragment>
                   ))}
-                </React.Fragment>
-              ))}
-            </TableBody>
-          </Table>
+                </TableBody>
+              </Table>
+            </div>
+            {selectedCommodity && (
+              <ClinicTable selectedCommodity={selectedCommodity} />
+            )}
+          </div>
         </div>
-        {selectedCommodity && (
-          <ClinicTable selectedCommodity={selectedCommodity} />
-        )}
-      </div>
+      </Card>
     </div>
   );
 }

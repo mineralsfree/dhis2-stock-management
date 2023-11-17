@@ -97,7 +97,7 @@ export function DeliveryPage({ user }) {
       }}
     >
       <PageHeading
-        variant="h1"
+        variant="h2"
         title="Register Commodity Arrival"
         content="This page enables you to register incoming commodities, either in bulk or individually. Below, you can view the delivery history."
       />
