@@ -50,6 +50,7 @@ export function Commodity() {
 
   const handleSubmit = async (formInput) => {
     console.log("formInput", formInput.data);
+    console.log(useHistory?.dispenseHistory);
 
     const dataValues = [];
     formInput.data.forEach((item) => {

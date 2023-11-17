@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useDataQuery} from "@dhis2/app-runtime";
-import {CONSUMPTION_ID, END_BALANCE_ID} from "../consts";
+import {CONSUMPTION_ID, END_BALANCE_ID, QUANTITY_ORDERED_ID} from "../consts";
 
 
 const dataQuery = {
@@ -30,9 +30,9 @@ const mergeData = (data) => {
         let endBalance = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === END_BALANCE_ID)?.value;
         endBalance = endBalance ? parseInt(endBalance) : 0;
         let consumption = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === CONSUMPTION_ID)?.value;
-        // console.log("consumption", displayName, consumption);
         consumption = consumption ? parseInt(consumption) : 0;
-        // const category = d.dataElement.dataElementGroups[0].name.replace(/Commodities( - )?/, '').trim();
+        let quantityOrdered = data.commoditiesValue.dataValues.find(dataValues => dataValues.dataElement === d.dataElement.id && dataValues.categoryOptionCombo === QUANTITY_ORDERED_ID)?.value;
+        quantityOrdered = quantityOrdered ? parseInt(quantityOrdered) : 0;
         const inStock = endBalance ? parseInt(endBalance) - (consumption ? parseInt(consumption) : 0) : 0;
         // get longer group (category) and remove "Comodity" prefix
         const category = d.dataElement.dataElementGroups.sort((a, b) => b.name.length - a.name.length)[0].name.replace(/Commodities( - )?/, '').trim();
@@ -41,6 +41,7 @@ const mergeData = (data) => {
             id: d.dataElement.id,
             endBalance: endBalance,
             consumption: consumption,
+            quantityOrdered: quantityOrdered,
             inStock: endBalance, // remove
             category: category,
         };
@@ -69,7 +70,7 @@ export const useCommodities = () => {
     if (data && !commodities && !refetchLoading) {
         setCommodities(mergeData(data));
     }
-    console.log('useCommodities', commodities);
+    
     return {loading: loading || refetchLoading, error, commodities, refetch};
 
 }

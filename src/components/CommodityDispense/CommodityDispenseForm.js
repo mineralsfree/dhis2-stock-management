@@ -89,7 +89,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
           width: "min-content",
         }}
       >
-        <Card style={{ padding: "24px", background: "white" }}>
+        <Card>
           <div style={{ padding: "24px", width: "calc(410px + 72px)" }}>
             <h3>Register commodity dispense</h3>
             <ReactFinalForm.Form
