@@ -8,7 +8,6 @@ import {
   TableHead,
   TableRow,
   TableRowHead,
-  CircularLoader,
 } from "@dhis2/ui";
 import { formatDatetime } from "../../utils/formatting";
 import * as PropTypes from "prop-types";
@@ -21,7 +20,7 @@ export function DispenseHistoryTable({ useDispenseHistory }) {
   }
 
   if (loading) {
-    return <CircularLoader large />;
+    return <></>;
   }
 
   if (!dispenseHistory) {

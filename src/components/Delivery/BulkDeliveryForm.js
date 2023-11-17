@@ -41,16 +41,6 @@ export function BulkDeliveryForm({ user, registerDelivery }) {
   const stockBalance = (id) => stockBalanceById(commodityOptions, id);
   const displayNameFromId = (id) =>
     commodityOptions.find((commodity) => commodity.value === id).label;
-  console.log(commodityOptions);
-
-  // const commodityCategories = Object.keys(commodities).map((key) => ({
-  //   label: key,
-  //   value: key,
-  // }));
-  // console.log(commodityCategories);
-
-  // const initalCategories = commodityCategories.map(({ value }) => value);
-
   const handle = (values) => {
     const arrivedCommodities = Object.entries(values)
       .filter(([key]) => key.includes("quantity_"))
@@ -97,14 +87,6 @@ export function BulkDeliveryForm({ user, registerDelivery }) {
               validate={hasValue}
               required
             />
-            {/* <ReactFinalForm.Field
-              className={styles.categoryField}
-              name="categories"
-              label="Categories"
-              component={MultiSelectFieldFF}
-              options={commodityCategories}
-              initialValue={initalCategories}
-            /> */}
             <Table className={styles.table}>
               <TableHead>
                 <TableRowHead>
@@ -122,7 +104,6 @@ export function BulkDeliveryForm({ user, registerDelivery }) {
                       <ReactFinalForm.Field
                         name={`quantity_${commodity.value}`}
                         className={styles.inputField}
-                        // label="Quantity"
                         type="number"
                         component={InputFieldFF}
                         initialValue={

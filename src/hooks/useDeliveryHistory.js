@@ -32,7 +32,6 @@ export const useDeliveryHistory = () => {
   }
 
   if (data && !deliveryHistory && !refetchLoading) {
-    console.log("useDeliveryHistory", data);
     setDeliveryHistory(Object.values(data.deliveryHistory.deliveryHistory));
   }
   return {

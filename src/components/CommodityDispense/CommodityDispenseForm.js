@@ -63,10 +63,6 @@ export default function CommodityDispenseForm({ handleRegister }) {
     return commodity ? commodity.label : "";
   };
 
-  // console.log("Commodities");
-  // console.log(commodities);
-  // console.log(commodityOptions);
-
   return (
     <div className={styles.c}>
       <PageHeading

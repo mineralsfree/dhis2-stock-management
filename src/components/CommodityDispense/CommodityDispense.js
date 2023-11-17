@@ -37,9 +37,6 @@ export function CommodityDispense() {
   const useHistory = useDispenseHistory();
 
   const handleSubmit = async (formInput) => {
-    console.log("formInput", formInput.data);
-    console.log(useHistory?.dispenseHistory);
-
     const dataValues = [];
     formInput.data.forEach((item) => {
       // update consumption

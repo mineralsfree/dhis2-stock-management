@@ -1,5 +1,4 @@
 export const recipientsToOptions = (recipients) => {
-  console.log(recipients);
   if (!recipients) {
     return [];
   }
