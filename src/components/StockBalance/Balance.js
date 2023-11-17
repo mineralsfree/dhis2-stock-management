@@ -19,8 +19,8 @@ import {
 } from "@dhis2/ui";
 
 import styles from "./Balance.module.css";
-import { ORG_UNIT } from "./consts";
-import { PageHeading } from "./components/PageHeading/PageHeading";
+import { ORG_UNIT } from "../../consts";
+import { PageHeading } from "../PageHeading/PageHeading";
 
 const dataQuery = {
   dataSets: {

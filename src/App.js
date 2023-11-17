@@ -2,8 +2,8 @@ import React from "react";
 import classes from "./App.module.css";
 import { useState } from "react";
 
-import { Commodity } from "./Commodity";
-import { Balance } from "./Balance";
+import { CommodityDispense } from "./components/CommodityDispense/CommodityDispense";
+import { Balance } from "./components/StockBalance/Balance";
 import { CircularLoader } from "@dhis2/ui";
 import { Toaster } from "react-hot-toast";
 import { Navigation } from "./Navigation";
@@ -41,7 +41,7 @@ function MyApp() {
       <div className={classes.right}>
         {activePage === "Balance" && <Balance />}
         {/*    {activePage === "Insert" && <Insert/>}*/}
-        {activePage === "Commodity" && <Commodity />}
+        {activePage === "Commodity" && <CommodityDispense />}
         {activePage === "Delivery" && <DeliveryPage user={data.me} />}
       </div>
       <Toaster />

@@ -13,7 +13,7 @@ import {
   TableRowHead,
   Button,
 } from "@dhis2/ui";
-import { useNearbyClinics } from "./hooks/useNearbyClinics";
+import { useNearbyClinics } from "../../hooks/useNearbyClinics";
 import * as PropTypes from "prop-types";
 import toast from "react-hot-toast";
 
