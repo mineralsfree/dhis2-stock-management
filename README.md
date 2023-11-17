@@ -138,7 +138,6 @@ The application consist of three main pages:
 
 - HTML
 - Javascript with React
-- Npx
 - Yarn
 
 ## Installation Instructions
