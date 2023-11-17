@@ -40,7 +40,6 @@ function MyApp() {
       </div>
       <div className={classes.right}>
         {activePage === "Balance" && <Balance />}
-        {/*    {activePage === "Insert" && <Insert/>}*/}
         {activePage === "Commodity" && <CommodityDispense />}
         {activePage === "Delivery" && <DeliveryPage user={data.me} />}
       </div>

@@ -36,19 +36,19 @@ const mergeData = (data) => {
     let endBalance = data.commoditiesValue.dataValues.find(
       (dataValues) =>
         dataValues.dataElement === d.dataElement.id &&
-        dataValues.categoryOptionCombo === END_BALANCE_ID,
+        dataValues.categoryOptionCombo === END_BALANCE_ID
     )?.value;
     endBalance = endBalance ? parseInt(endBalance) : 0;
     let consumption = data.commoditiesValue.dataValues.find(
       (dataValues) =>
         dataValues.dataElement === d.dataElement.id &&
-        dataValues.categoryOptionCombo === CONSUMPTION_ID,
+        dataValues.categoryOptionCombo === CONSUMPTION_ID
     )?.value;
     consumption = consumption ? parseInt(consumption) : 0;
     let quantityOrdered = data.commoditiesValue.dataValues.find(
       (dataValues) =>
         dataValues.dataElement === d.dataElement.id &&
-        dataValues.categoryOptionCombo === QUANTITY_ORDERED_ID,
+        dataValues.categoryOptionCombo === QUANTITY_ORDERED_ID
     )?.value;
     quantityOrdered = quantityOrdered ? parseInt(quantityOrdered) : 0;
     // get longer group (category) and remove "Comodity" prefix

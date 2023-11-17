@@ -27,7 +27,6 @@ import PropTypes from "prop-types";
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
-  // const [selectedCommodities, setSelectedCommodities] = useState([]);
 
   const {
     loading: commoditiesLoading,
@@ -84,10 +83,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                   dataElement: values[`commodity_${c}`],
                   amount: parseInt(values[`amount_${c}`]),
                   currentConsumption: currentConsumption(
-                    values[`commodity_${c}`],
+                    values[`commodity_${c}`]
                   ),
                   currentEndBalance: getCurrentEndBalance(
-                    values[`commodity_${c}`],
+                    values[`commodity_${c}`]
                   ),
                   displayName: getDisplayName(values[`commodity_${c}`]),
                 }));
@@ -170,10 +169,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                                 1,
                                 values[`commodity_${c}`]
                                   ? getCurrentEndBalance(
-                                      values[`commodity_${c}`],
+                                      values[`commodity_${c}`]
                                     )
-                                  : Infinity,
-                              ),
+                                  : Infinity
+                              )
                             )}
                             required
                           />
@@ -184,7 +183,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                             className={styles.formItemRemove}
                             onClick={() => {
                               setCommodityBulk((curr) =>
-                                curr.filter((cc) => cc !== c),
+                                curr.filter((cc) => cc !== c)
                               );
                               // reset the values
                               values[`commodity_${c}`] = undefined;
@@ -210,7 +209,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       onClick={() => {
                         const lastVal = commodityBulk[commodityBulk.length - 1];
                         setCommodityBulk((curr) =>
-                          curr.concat([`${parseInt(lastVal) + 1}`]),
+                          curr.concat([`${parseInt(lastVal) + 1}`])
                         );
                       }}
                       selected
@@ -236,8 +235,6 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       label="Time dispensed"
                       component={InputFieldFF}
                       type="time"
-                      // how tf does one get the current format in users timezone but
-                      // being saved in UTC time to the api
                       initialValue={new Date().toLocaleString("no-NB", {
                         hour: "2-digit",
                         minute: "2-digit",
