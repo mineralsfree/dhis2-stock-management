@@ -36,12 +36,15 @@ export const IndividualDeliveryForm = ({ user, registerDelivery }) => {
 
   const commodityOptions = commoditiesToOptions(commodities);
   const stockBalance = (id) => stockBalanceById(commodityOptions, id);
+  const displayNameFromId = (id) =>
+    commodityOptions.find((commodity) => commodity.value === id).label;
 
   const handle = (values) => {
     console.log(values);
     const arrivedCommodity = [
       {
         dataElement: values.commodity,
+        displayName: displayNameFromId(values.commodity),
         quantityOrdered: parseInt(values.quantity),
         newBalance: stockBalance(values.commodity) + parseInt(values.quantity),
       },
