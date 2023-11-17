@@ -1,44 +1,32 @@
 .float-container {
-  width: 100%;
-}
+    width: 100%;
+  }
 
-
-.float-child {
-  width: 50%;
-  float: left;
-}
-
+  
+  .float-child {
+    width: 50%;
+    float: left;
+  }
+  
 .category{
-  color: rgb(0, 0, 0);
-  background-color:#D5DDE5;
-}
-.tablebtn{
-  cursor: 'pointer';
-  background-color: transparent;
-  border: transparent;
-
+    color: rgb(0, 0, 0);
+    background-color:#D5DDE5;
 }
 
-.tablebtn:hover {
-  color: black;
-  cursor: pointer;
-
-}
-
-.tablerow{
-  background-color: transparent;
-  border: transparent;
+  .tablerow{
+    background-color: transparent;
+    border: transparent;
 
 }
 
 .tablerow:hover {
-  background-color: #e3f2fd  !important;
-  cursor: pointer;
+    background-color: #e3f2fd  !important;
+cursor: pointer;
 }
 .tablerow_active{
   background-color: #e3f2fd  !important;
-}
-
+  }
+  
 .error-message{
   color: red;
 
@@ -47,4 +35,9 @@
 .buttonContainer{
   width: 100%;
   margin-bottom: 8px;
+}
+.tableRowWrapper {
+  display: contents; 
+  cursor: pointer;
+
 }

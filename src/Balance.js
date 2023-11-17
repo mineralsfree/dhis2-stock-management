@@ -187,15 +187,14 @@ export function Balance() {
                   <TableCell colSpan="3" className={styles.category}>{category}</TableCell>
                 </TableRow>
                 {groupedData[category].map((row) => (
-                  <TableRow  key={row.id} className={styles.tablerow + (selectedCommodity === row.displayName ? ` ${styles.tablerow_active}` : '')}>
-                    <TableCell >
+            <div className={styles.tableRowWrapper} onClick={e => handleClick(row.displayName)}>
+                  <TableRow  key={row.id}   className={styles.tablerow + (selectedCommodity === row.displayName ? ` ${styles.tablerow_active}` : '')}onClick={() => handleClick(row.displayName)}>
+                   <TableCell >
                     </TableCell>
-                    <TableCell>
-                      <button className={styles.tablebtn} onClick={e => handleClick(row.displayName)}>{row.displayName}
-                      </button>
-                    </TableCell>
+                    <TableCell>{row.displayName}</TableCell>
                     <TableCell>{row.value}</TableCell>
                   </TableRow>
+                  </div>
                 ))}
               </React.Fragment>
             ))}
