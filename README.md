@@ -47,13 +47,13 @@ The application consist of three main pages:
 - **Features:**
   - A form to register dispens
   - Dropdown menus for selecting "dispensed by" and "dispenser to" from a list of individuals.
-    - Form to input the commodity name and quantity for dispensing.
-    - Real-time display of the current stock quantity below the commodity input, with an error message for exceeding stock limits.
-    - "Add commodity" button to dynamically expand the form for multiple dispensing entries.
-    - Automatic pre-filling of date and time fields based on data, allowing user modification.
-    - A "Commodity Dispense History" which isis dynamically updated upon clicking the "Register" button in the form, showcasing a comprehensive record of dispensed commodities, encompassing all the information entered in the form.
-    - A form at the right side where a new recipient via "Add New Recipient" can be added, including name and department fields.
-    - Confirmation toast notification for successful addition of a new recipient.
+  - Form to input the commodity name and quantity for dispensing.
+  - Real-time display of the current stock quantity below the commodity input, with an error message for exceeding stock limits.
+  - "Add commodity" button to dynamically expand the form for multiple dispensing entries.
+  - Automatic pre-filling of date and time fields based on data, allowing user modification.
+  - A "Commodity Dispense History" which isis dynamically updated upon clicking the "Register" button in the form, showcasing a comprehensive record of dispensed commodities, encompassing all the information entered in the form.
+  - A form at the right side where a new recipient via "Add New Recipient" can be added, including name and department fields.
+   - Confirmation toast notification for successful addition of a new recipient.
 - **How to use:**
 
   1.  **Registering Commodity Dispense:**
@@ -84,17 +84,17 @@ The application consist of three main pages:
 
 
 
- **How to Use:**
-- Register arrival:
-    1. Choose between bulk registration or individual registration.
-    2. Specify the recipient receiving the commodities by filling out the "Stored by" field in the form.
-    3. For each commodity, input the quantity in the designated field.
-    4. Optionally, set the time of delivery using the provided time field (auto-filled by default).
-    5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below.
+- **How to Use:**
+  - Register arrival:
+      1. Choose between bulk registration or individual registration.
+      2. Specify the recipient receiving the commodities by filling out the "Stored by" field in the form.
+      3. For each commodity, input the quantity in the designated field.
+      4. Optionally, set the time of delivery using the provided time field (auto-filled by default).
+      5. Click "Register Arrival," and the delivery will be recorded in the "Delivery Arrival History" table below.
 
-- Check earlier deliverys and View Details:
-    1. Locate the desired delivery in the "Delivery Arrival History" table.
-    2. Click on "View Details" to access comprehensive information about the selected delivery.
+  - Check earlier deliverys and View Details:
+      1. Locate the desired delivery in the "Delivery Arrival History" table.
+      2. Click on "View Details" to access comprehensive information about the selected delivery.
 
 
 
