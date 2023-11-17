@@ -221,6 +221,7 @@ export function Balance() {
                         <div
                           className={styles.tableRowWrapper}
                           onClick={() => handleClick(row.displayName)}
+                          key={row.id}
                         >
                           <TableRow
                             key={row.id}
@@ -230,7 +231,6 @@ export function Balance() {
                                 ? ` ${styles.tablerow_active}`
                                 : "")
                             }
-                            onClick={() => handleClick(row.displayName)}
                           >
                             <TableCell></TableCell>
                             <TableCell>{row.displayName}</TableCell>
