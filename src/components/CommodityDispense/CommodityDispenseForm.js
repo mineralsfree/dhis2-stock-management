@@ -135,6 +135,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                   </div>
 
                   {commodityBulk.map((c) => {
+                    console.log("kjkj", values);
                     return (
                       <div className={styles.formCommodityRow} key={c}>
                         <div className={styles.formRow}>
@@ -149,6 +150,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                             }`}
                             component={SingleSelectFieldFF}
                             options={commodityOptions}
+                            onChange={(e) => {
+                              const selected = e.target.value;
+                              console.log("selected", selected);
+                            }}
                             validate={hasValue}
                             required
                           />
