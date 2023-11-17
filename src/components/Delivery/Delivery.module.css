@@ -1,0 +1,53 @@
+.deliveryContainer {
+  margin-top: 10px;
+}
+
+.deliveryForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.table {
+  min-width: auto !important;
+}
+
+.tableRow {
+  height: 20px;
+}
+
+.tableRow td {
+  padding: 0 12px;
+  height: 42px;
+}
+
+.storedByField {
+  width: 180px;
+}
+
+.inputField {
+  width: 100px;
+}
+
+.datetimeInput {
+  width: 180px;
+}
+
+.commodityRow {
+  display: flex;
+  gap: 10px;
+}
+
+.commodityField {
+  width: 180px;
+}
+
+.categoryField {
+  width: 380px;
+}
+
+.deliveryDetailsText {
+  font-size: 13px;
+  margin-top: 20px;
+}

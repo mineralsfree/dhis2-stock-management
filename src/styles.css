@@ -1,62 +1,71 @@
 .my-form {
-    display: flex;
-    flex-direction: column;
-    border: '1px solid ';
-    
-    width: 500px;
-    justify-content: center;
-    
-    margin: 0px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
 
+  width: 500px;
+  justify-content: center;
 
-
+  margin: 0px;
 }
 
 .form-row {
-    display: flex;
-    margin-top: 15px;
-    margin-left: 15px;
-    margin-right: 75px;
-    flex: 1;
-    justify-content:space-around;
-
+  display: flex;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 75px;
+  flex: 1;
+  justify-content: space-around;
 }
 
 .form-row > div:not(:last-child) {
-    margin-right: 10px;
-    margin-left: 30px; /* Add some space between elements */
+  margin-right: 10px;
+  margin-left: 30px; /* Add some space between elements */
 }
 
 .form-button {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
-.dropdown{
-    width: 200px; /* Adjust the width as needed */
+.dropdown {
+  width: 200px; /* Adjust the width as needed */
 }
 
 .form-button {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
-.span{
-    margin-top: 100px;
-
-}
-
-.category{
-    color: rgb(0, 0, 0);
-    background-color:rgb(230, 227, 227)
+.span {
+  margin-top: 100px;
 }
 
-
-.button-container{
-    border: '1px solid #c4c9cc';
-    padding: 8;
-    width: '100%';
-
+.category {
+  color: rgb(0, 0, 0);
+  background-color: rgb(230, 227, 227);
 }
 
+.button-container {
+  border: 1px solid #c4c9cc;
+  width: 100%;
+  margin-top: 8px;
+}
 
+h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 2.3;
+  font-size: 1.5rem;
+  color: #212529;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.7;
+  font-size: 1.2rem;
+  color: #212529;
+}

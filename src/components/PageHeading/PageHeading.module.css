@@ -1,0 +1,25 @@
+.info {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 1000px;
+  margin: 16px;
+  background-color: #6c7787;
+}
+
+.stripe {
+  display: flex;
+  align-items: center;
+}
+.stripe > span {
+  margin-left: 1rem;
+}
+
+.stripe > span:hover {
+  cursor: pointer;
+}
+.title {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}

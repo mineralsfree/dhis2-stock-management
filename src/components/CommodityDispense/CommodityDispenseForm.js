@@ -22,33 +22,32 @@ import {
 } from "../../utils/CommoditiesUtils";
 import { useRecipients } from "../../hooks/useRecipients";
 import { recipientsToOptions } from "../../utils/recepientsUtils";
-import {RecipientAddForm} from "../RecipentsAddForm/RecipientAddForm";
-
-// Fix these later
-const dispensedByOptions = [
-  { value: "johndoe", label: "John Doe" },
-  { value: "janedoe", label: "Jane Doe" },
-  { value: "johnsmith", label: "John Smith" },
-  { value: "janesmith", label: "Jane Smith" },
-];
-
-const dispensedToOptions = [
-  { value: "1", label: "John Doe" },
-  { value: "2", label: "Jane Doe" },
-  { value: "3", label: "John Smith" },
-  { value: "4", label: "Jane Smith" },
-];
+import { RecipientAddForm } from "../RecipentsAddForm/RecipientAddForm";
+import PropTypes from "prop-types";
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
 
-  const { loading: commoditiesLoading, error, commodities, refetch } = useCommodities();
-  const { recipients, loading: recipientsLoading, refetch: recipientsRefetch } = useRecipients();
+  const {
+    loading: commoditiesLoading,
+    error,
+    commodities,
+    refetch,
+  } = useCommodities();
+
+  const {
+    recipients,
+    loading: recipientsLoading,
+    refetch: recipientsRefetch,
+  } = useRecipients();
+
   const recipientsOptions = recipientsToOptions(recipients);
   const [showForm, setShowForm] = useState(false);
+
   if (commoditiesLoading || recipientsLoading) {
-    return  <CircularLoader large/>
+    return <CircularLoader large />;
   }
+
   if (error) {
     return <span>ERROR: {error.message}</span>;
   }
@@ -59,7 +58,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
 
   const commodityOptions = commoditiesToOptions(commodities);
 
-  const stockBalance = (id) => stockBalanceById(commodityOptions, id);
+  const getCurrentEndBalance = (id) => stockBalanceById(commodityOptions, id);
   const currentConsumption = (id) =>
     parseInt(commodityOptions.find((com) => com.value === id).consumption);
   const getDisplayName = (id) => {
@@ -67,47 +66,52 @@ export default function CommodityDispenseForm({ handleRegister }) {
     return commodity ? commodity.label : "";
   };
 
-  // console.log("Commodities");
-  // console.log(commodities);
-  // console.log(commodityOptions);
-
   return (
     <div className={styles.c}>
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gridGap: "10px",
-          margin: "10px",
+          display: "flex",
+          gap: "10px",
+          width: "min-content",
         }}
       >
-        <Card style={{ padding: "24px", background: "white" }}>
-          <div style={{ padding: "24px" }}>
-            <h3>Register commodity dispense</h3>
+        <Card>
+          <div style={{ padding: "24px", width: "calc(410px + 72px)" }}>
             <ReactFinalForm.Form
               onSubmit={(values) => {
+                const data = commodityBulk.map((c) => ({
+                  dataElement: values[`commodity_${c}`],
+                  amount: parseInt(values[`amount_${c}`]),
+                  currentConsumption: currentConsumption(
+                    values[`commodity_${c}`],
+                  ),
+                  currentEndBalance: getCurrentEndBalance(
+                    values[`commodity_${c}`],
+                  ),
+                  displayName: getDisplayName(values[`commodity_${c}`]),
+                }));
+
                 const formInput = {
                   dispensedBy: values["dispensedBy"],
                   dispensedTo: values["dispensedTo"],
                   dateDispensed: values["dateDispensed"],
                   timeDispensed: values["timeDispensed"],
-                  dataValues: commodityBulk.map((c) => ({
-                    dataElement: values[`commodity_${c}`],
-                    value:
-                      parseInt(values[`amount_${c}`]) +
-                      currentConsumption(values[`commodity_${c}`]),
-                    valueRaw: values[`amount_${c}`],
-                    displayName: getDisplayName(values[`commodity_${c}`]),
-                  })),
+                  data: data,
                 };
-                handleRegister(formInput);
+                handleRegister(formInput).then(() => {
+                  // refetch commodities when done
+                  refetch();
+                });
               }}
             >
               {({ values, handleSubmit, form }) => (
-                <form onSubmit={event =>{
-                  handleSubmit(event);
-                  form.reset();
-                }}>
+                <form
+                  onSubmit={(event) => {
+                    handleSubmit(event);
+                    form.reset();
+                    setCommodityBulk(["1"]);
+                  }}
+                >
                   <div className={styles.formRow}>
                     <ReactFinalForm.Field
                       className={styles.recipient_field}
@@ -118,8 +122,6 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       validate={hasValue}
                       required
                     />
-                  </div>
-                  <div className={styles.formRow}>
                     <ReactFinalForm.Field
                       name="dispensedTo"
                       label="Dispensed to"
@@ -138,18 +140,25 @@ export default function CommodityDispenseForm({ handleRegister }) {
                           <ReactFinalForm.Field
                             className={styles.field}
                             name={`commodity_${c}`}
-                            // value={value}
                             label="Commodity"
                             helpText={`In stock: ${
                               values[`commodity_${c}`]
-                                ? stockBalance(values[`commodity_${c}`])
+                                ? getCurrentEndBalance(values[`commodity_${c}`])
                                 : ""
                             }`}
                             component={SingleSelectFieldFF}
-                            options={commodityOptions}
+                            options={commodityOptions.filter((v) => {
+                              const selectedCommodities = commodityBulk
+                                .filter((c2) => c2 !== c)
+                                .map((c2) => values[`commodity_${c2}`]);
+
+                              return !selectedCommodities.includes(v.value);
+                            })}
                             validate={hasValue}
+                            required
                           />
                           <ReactFinalForm.Field
+                            className={styles.field}
                             name={`amount_${c}`}
                             label="Amount"
                             component={InputFieldFF}
@@ -159,19 +168,22 @@ export default function CommodityDispenseForm({ handleRegister }) {
                               createNumberRange(
                                 1,
                                 values[`commodity_${c}`]
-                                  ? stockBalance(values[`commodity_${c}`])
-                                  : Infinity
-                              )
+                                  ? getCurrentEndBalance(
+                                      values[`commodity_${c}`],
+                                    )
+                                  : Infinity,
+                              ),
                             )}
                             required
                           />
                         </div>
                         {c !== "1" && (
+                          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
                           <div
                             className={styles.formItemRemove}
                             onClick={() => {
                               setCommodityBulk((curr) =>
-                                curr.filter((cc) => cc !== c)
+                                curr.filter((cc) => cc !== c),
                               );
                               // reset the values
                               values[`commodity_${c}`] = undefined;
@@ -189,6 +201,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       width: "410px",
                       display: "flex",
                       justifyContent: "center",
+                      margin: "0px 0 20px 0",
                     }}
                   >
                     <Chip
@@ -196,7 +209,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       onClick={() => {
                         const lastVal = commodityBulk[commodityBulk.length - 1];
                         setCommodityBulk((curr) =>
-                          curr.concat([`${parseInt(lastVal) + 1}`])
+                          curr.concat([`${parseInt(lastVal) + 1}`]),
                         );
                       }}
                       selected
@@ -214,6 +227,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       type="date"
                       initialValue={new Date().toISOString().slice(0, 10)}
                       validate={hasValue}
+                      required
                     />
                     <ReactFinalForm.Field
                       name="timeDispensed"
@@ -221,8 +235,12 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       label="Time dispensed"
                       component={InputFieldFF}
                       type="time"
-                      initialValue={new Date().toISOString().slice(11, 16)}
+                      initialValue={new Date().toLocaleString("no-NB", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                       validate={hasValue}
+                      required
                     />
                   </div>
 
@@ -235,27 +253,36 @@ export default function CommodityDispenseForm({ handleRegister }) {
           </div>
         </Card>
 
-
-
-      <div style={{ background: "none"}}>
-        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-            {!showForm && (<Chip
+        <div style={{ background: "none" }}>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
+            {!showForm && (
+              <Chip
                 icon={<IconAdd24 />}
                 onClick={() => {
-                    setShowForm(true); // Show the form when the "Add" icon is clicked.
+                  setShowForm(true); // Show the form when the "Add" icon is clicked.
                 }}
                 selected
-            >
+              >
                 {"Add new recipient"}
-            </Chip>)}
+              </Chip>
+            )}
+          </div>
+          <div>
+            {showForm && (
+              <RecipientAddForm
+                recipientsRefetch={recipientsRefetch}
+                recipients={recipients}
+                close={() => setShowForm(false)}
+              />
+            )}
+          </div>
         </div>
-        <div>
-        {showForm && <RecipientAddForm recipientsRefetch={recipientsRefetch} recipients={recipients} close={()=>setShowForm(false)}/>}
-        </div>
-     </div>
-
-  </div>
-</div>
-    
+      </div>
+    </div>
   );
 }
+CommodityDispenseForm.propTypes = {
+  handleRegister: PropTypes.func,
+};

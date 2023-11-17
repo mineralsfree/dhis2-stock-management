@@ -4,14 +4,23 @@
   "description": "",
   "license": "BSD-3-Clause",
   "private": true,
+  "precommit": "prettier, lint",
   "scripts": {
     "build": "d2-app-scripts build",
     "start": "d2-app-scripts start",
     "test": "d2-app-scripts test",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "prettier": "prettier . --write",
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
     "deploy": "d2-app-scripts deploy"
   },
   "devDependencies": {
-    "@dhis2/cli-app-scripts": "^10.3.10"
+    "@dhis2/cli-app-scripts": "^10.3.10",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "pre-commit": "^1.2.2",
+    "prettier": "^3.0.3"
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.9.4",
