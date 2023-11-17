@@ -81,8 +81,6 @@ export const useNearbyClinics = () => {
     setNearbyClinics(null);
   }
   if (data && !nearbyClinics && !refetchLoading) {
-    console.log("nearby", data);
-
     setNearbyClinics(mergeData(data));
   }
   return { loading: loading || refetchLoading, error, nearbyClinics, refetch };

@@ -32,7 +32,6 @@ export const useDispenseHistory = () => {
   }
 
   if (data && !dispenseHistory && !refetchLoading) {
-    console.log("useDispenseHistory", data);
     setDispenseHistory(Object.values(data.dispenseHistory.dispenseHistory));
   }
   return {

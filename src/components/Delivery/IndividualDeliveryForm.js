@@ -40,7 +40,6 @@ export const IndividualDeliveryForm = ({ user, registerDelivery }) => {
     commodityOptions.find((commodity) => commodity.value === id).label;
 
   const handle = (values) => {
-    console.log(values);
     const arrivedCommodity = [
       {
         dataElement: values.commodity,
