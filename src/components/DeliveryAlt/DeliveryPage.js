@@ -1,12 +1,13 @@
+import React from "react";
 import { useState } from "react";
 import { Card, TabBar, Tab } from "@dhis2/ui";
 import { BulkDeliveryForm } from "./BulkDeliveryForm";
 import { IndividualDeliveryForm } from "./IndividualDeliveryForm";
 import { DeliveryHistory } from "./DeliveryHistory";
-// import { CommodityDeliveryRegistrationPage } from "../Delivery/CommodityDeliveryRegistrationPage";
 import { useDataMutation } from "@dhis2/app-runtime";
 import { useDeliveryHistory } from "../../hooks/useDeliveryHistory";
 import toast, { Toaster } from "react-hot-toast";
+import PropTypes from "prop-types";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -131,3 +132,6 @@ export function DeliveryPage({ user }) {
     </div>
   );
 }
+DeliveryPage.propTypes = {
+  user: PropTypes.string,
+};

@@ -19,6 +19,7 @@ import {
 } from "../../utils/CommoditiesUtils";
 import { useDataMutation } from "@dhis2/app-runtime";
 import toast, { Toaster } from "react-hot-toast";
+import PropTypes from "prop-types";
 
 export const CommodityDeliveryRegistrationPage = (props) => {
   const [mutate] = useDataMutation(registerCommodityQuery);
@@ -51,7 +52,7 @@ export const CommodityDeliveryRegistrationPage = (props) => {
               onSubmit({
                 ...values,
                 balance: commodityOptions.find(
-                  (com) => com.value === values.commodity
+                  (com) => com.value === values.commodity,
                 ),
               });
             }}
@@ -61,7 +62,7 @@ export const CommodityDeliveryRegistrationPage = (props) => {
                 onSubmit={(event) => {
                   handleSubmit(event);
                   toast.success(
-                    `Successfully added ${values.amount} of ${values.commodity} to balance`
+                    `Successfully added ${values.amount} of ${values.commodity} to balance`,
                   );
                   refetch();
                   form.restart();
@@ -128,4 +129,7 @@ export const CommodityDeliveryRegistrationPage = (props) => {
       </div>
     );
   }
+};
+CommodityDeliveryRegistrationPage.propTypes = {
+  user: PropTypes.objectOf({ name: PropTypes.string }),
 };

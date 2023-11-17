@@ -44,7 +44,6 @@ You can learn more about the runtime in the [DHIS2 Application Runtime Documenta
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-
 ## First protypes
 
 ![bilde1](https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/94d7b187-2292-49d3-ac95-d93506580217)
@@ -52,5 +51,3 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ![bilde2](https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/65d8e43d-f760-4092-9caa-e62a51c9adab)
 
 ![bilde3](https://github.com/mineralsfree/dhis2-stock-management/assets/69040348/d817311d-3eee-4762-88ff-44e205122752)
-
-

@@ -13,11 +13,11 @@ import {
   Card,
 } from "@dhis2/ui";
 import { formatDatetime } from "./utils/formatting";
-import { useCommodities } from "./hooks/useCommodities";
 import { useDispenseHistory } from "./hooks/useDispenseHistory";
 import CommodityDispenseForm from "./components/CommodityDispense/CommodityDispenseForm";
 import toast, { Toaster } from "react-hot-toast";
-import {ORG_UNIT} from "./consts";
+import { ORG_UNIT } from "./consts";
+import * as PropTypes from "prop-types";
 
 const dataMutationQuery = {
   dataSet: "ULowA8V3ucd",
@@ -94,7 +94,7 @@ export function Commodity() {
     ];
 
     await Promise.all(promises)
-      .then((res) => {
+      .then(() => {
         // success, refetch dispense history
         useHistory.refetch();
         toast.success("Successfully registered commodity dispense", {
@@ -126,7 +126,7 @@ export function Commodity() {
 }
 
 function DispenseHistoryTable({ useDispenseHistory }) {
-  const { loading, error, dispenseHistory, refetch } = useDispenseHistory;
+  const { loading, error, dispenseHistory } = useDispenseHistory;
 
   if (error) {
     return <span>ERROR: {error.message}</span>;
@@ -177,3 +177,6 @@ function DispenseHistoryTable({ useDispenseHistory }) {
     </Card>
   );
 }
+DispenseHistoryTable.propTypes = {
+  useDispenseHistory: PropTypes.objectOf(PropTypes.any),
+};

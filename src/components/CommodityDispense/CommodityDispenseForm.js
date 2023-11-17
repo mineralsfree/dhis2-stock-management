@@ -23,21 +23,7 @@ import {
 import { useRecipients } from "../../hooks/useRecipients";
 import { recipientsToOptions } from "../../utils/recepientsUtils";
 import { RecipientAddForm } from "../RecipentsAddForm/RecipientAddForm";
-
-// Fix these later
-const dispensedByOptions = [
-  { value: "johndoe", label: "John Doe" },
-  { value: "janedoe", label: "Jane Doe" },
-  { value: "johnsmith", label: "John Smith" },
-  { value: "janesmith", label: "Jane Smith" },
-];
-
-const dispensedToOptions = [
-  { value: "1", label: "John Doe" },
-  { value: "2", label: "Jane Doe" },
-  { value: "3", label: "John Smith" },
-  { value: "4", label: "Jane Smith" },
-];
+import PropTypes from "prop-types";
 
 export default function CommodityDispenseForm({ handleRegister }) {
   const [commodityBulk, setCommodityBulk] = useState(["1"]);
@@ -98,10 +84,10 @@ export default function CommodityDispenseForm({ handleRegister }) {
                   dataElement: values[`commodity_${c}`],
                   amount: parseInt(values[`amount_${c}`]),
                   currentConsumption: currentConsumption(
-                    values[`commodity_${c}`]
+                    values[`commodity_${c}`],
                   ),
                   currentEndBalance: getCurrentEndBalance(
-                    values[`commodity_${c}`]
+                    values[`commodity_${c}`],
                   ),
                   displayName: getDisplayName(values[`commodity_${c}`]),
                 }));
@@ -178,20 +164,21 @@ export default function CommodityDispenseForm({ handleRegister }) {
                                 1,
                                 values[`commodity_${c}`]
                                   ? getCurrentEndBalance(
-                                      values[`commodity_${c}`]
+                                      values[`commodity_${c}`],
                                     )
-                                  : Infinity
-                              )
+                                  : Infinity,
+                              ),
                             )}
                             required
                           />
                         </div>
                         {c !== "1" && (
+                          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
                           <div
                             className={styles.formItemRemove}
                             onClick={() => {
                               setCommodityBulk((curr) =>
-                                curr.filter((cc) => cc !== c)
+                                curr.filter((cc) => cc !== c),
                               );
                               // reset the values
                               values[`commodity_${c}`] = undefined;
@@ -217,7 +204,7 @@ export default function CommodityDispenseForm({ handleRegister }) {
                       onClick={() => {
                         const lastVal = commodityBulk[commodityBulk.length - 1];
                         setCommodityBulk((curr) =>
-                          curr.concat([`${parseInt(lastVal) + 1}`])
+                          curr.concat([`${parseInt(lastVal) + 1}`]),
                         );
                       }}
                       selected
@@ -293,3 +280,6 @@ export default function CommodityDispenseForm({ handleRegister }) {
     </div>
   );
 }
+CommodityDispenseForm.propTypes = {
+  handleRegister: PropTypes.func,
+};
